@@ -46,3 +46,9 @@
   align-items: center;
   justify-content: center;
 }
+
+.button-container.connected{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
