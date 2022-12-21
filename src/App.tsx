@@ -27,6 +27,7 @@ const wagmiClient = createClient({
 const ethereumClient = new EthereumClient(wagmiClient, chains);
 
 export default function App() {
+  const projectId = String(process.env.REACT_APP_WC_PROJECT_ID)
   return (
     <>
       <WagmiConfig client={wagmiClient}>
@@ -34,7 +35,7 @@ export default function App() {
       </WagmiConfig>
       <Web3Button />
       <Web3Modal
-        projectId="0b5c910d4315b61602f1679c78ea6922"
+        projectId={projectId}
         ethereumClient={ethereumClient}
       />
     </>
