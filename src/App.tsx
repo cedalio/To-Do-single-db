@@ -8,11 +8,10 @@ import { Web3Modal } from "@web3modal/react";
 
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 
-import { arbitrum, mainnet, polygon } from "wagmi/chains";
+import { polygonMumbai } from "wagmi/chains";
 import HomePage from "./HomePage";
-import { useWeb3ModalTheme } from "@web3modal/react";
 import { Web3Button } from "@web3modal/react";
-const chains = [arbitrum, mainnet, polygon];
+const chains = [polygonMumbai];
 
 // Wagmi client
 const { provider } = configureChains(chains, [
@@ -28,7 +27,6 @@ const wagmiClient = createClient({
 const ethereumClient = new EthereumClient(wagmiClient, chains);
 
 export default function App() {
-  const { theme, setTheme } = useWeb3ModalTheme();
   return (
     <>
       <WagmiConfig client={wagmiClient}>
