@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  background-color: #f9fafb;
   min-height: 100vh;
 }
 
@@ -40,4 +39,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.button-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

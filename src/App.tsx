@@ -3,13 +3,13 @@ import {
   modalConnectors,
   walletConnectProvider,
 } from "@web3modal/ethereum";
-
+import "./App.css"
 import { Web3Modal } from "@web3modal/react";
 
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 
 import { polygonMumbai } from "wagmi/chains";
-import HomePage from "./HomePage";
+import Header from "./components/Header";
 import { Web3Button } from "@web3modal/react";
 const chains = [polygonMumbai];
 
@@ -30,14 +30,18 @@ export default function App() {
   const projectId = String(process.env.REACT_APP_WC_PROJECT_ID)
   return (
     <>
-      <WagmiConfig client={wagmiClient}>
-        <HomePage />
-      </WagmiConfig>
-      <Web3Button />
-      <Web3Modal
-        projectId={projectId}
-        ethereumClient={ethereumClient}
-      />
+      <div className="App">
+        <WagmiConfig client={wagmiClient}>
+          <Header />
+          <div className="button-container">
+            <Web3Button />
+          </div>
+          <Web3Modal
+            projectId={projectId}
+            ethereumClient={ethereumClient}
+          />
+        </WagmiConfig>
+      </div>
     </>
   );
 }
