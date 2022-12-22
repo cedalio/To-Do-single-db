@@ -84,7 +84,6 @@ export default function ListComponent(props: { address: string | undefined }) {
         //     priority: 3
         // }
     ]
-    console.log(todos.length)
     function displayCard(todo: Todo) {
         return (
             <Card sx={{ minWidth: "30%", maxWidth: "60%", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
