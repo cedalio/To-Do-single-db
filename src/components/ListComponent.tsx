@@ -4,6 +4,10 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import ToggleButton from '@mui/material/ToggleButton';
+import Box from '@mui/material/Box';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 type Todo = {
     title: string,
@@ -12,9 +16,11 @@ type Todo = {
     priority: number
 }
 
-
-
 export default function ListComponent(props: { address: string | undefined }) {
+    const [priority, setPriority] = React.useState("");
+
+    const priorities = [1, 2, 3, 4]
+
     const defaultTodo = {
         title: "This Is Your First ToDo Card!",
         description: "Buy some food for my dog and change their water",
@@ -22,61 +28,61 @@ export default function ListComponent(props: { address: string | undefined }) {
         priority: 1
     }
 
-    const todos:Array<Todo> | Array<null> = [
-    //     {
-    //         title: "Go to the gym",
-    //         description: "I have to go to the gym the monday at 3pm",
-    //         tags: ["healt", "rutine"],
-    //         priority: 1
-    //     },
-    //     {
-    //         title: "Go to the gym",
-    //         description: "I have to go to the gym the monday at 3pm",
-    //         tags: ["healt", "rutine"],
-    //         priority: 2
-    //     },
-    //     {
-    //         title: "Go to the gym",
-    //         description: "I have to go to the gym the monday at 3pm",
-    //         tags: ["healt", "rutine"],
-    //         priority: 3
-    //     },
-    //     {
-    //         title: "Go to the gym",
-    //         description: "I have to go to the gym the monday at 3pm",
-    //         tags: ["healt", "rutine"],
-    //         priority: 1
-    //     },
-    //     {
-    //         title: "Go to the gym",
-    //         description: "I have to go to the gym the monday at 3pm",
-    //         tags: ["healt", "rutine"],
-    //         priority: 2
-    //     },
-    //     {
-    //         title: "Go to the gym",
-    //         description: "I have to go to the gym the monday at 3pm",
-    //         tags: ["healt", "rutine"],
-    //         priority: 3
-    //     },
-    //     {
-    //         title: "Go to the gym",
-    //         description: "I have to go to the gym the monday at 3pm",
-    //         tags: ["healt", "rutine"],
-    //         priority: 1
-    //     },
-    //     {
-    //         title: "Go to the gym",
-    //         description: "I have to go to the gym the monday at 3pm",
-    //         tags: ["healt", "rutine"],
-    //         priority: 2
-    //     },
-    //     {
-    //         title: "Go to the gym",
-    //         description: "I have to go to the gym the monday at 3pm",
-    //         tags: ["healt", "rutine"],
-    //         priority: 3
-    //     }
+    const todos: Array<Todo> | Array<null> = [
+        // {
+        //     title: "Go to the gym",
+        //     description: "I have to go to the gym the monday at 3pm",
+        //     tags: ["healt", "rutine"],
+        //     priority: 1
+        // },
+        // {
+        //     title: "Go to the gym",
+        //     description: "I have to go to the gym the monday at 3pm",
+        //     tags: ["healt", "rutine"],
+        //     priority: 2
+        // },
+        // {
+        //     title: "Go to the gym",
+        //     description: "I have to go to the gym the monday at 3pm",
+        //     tags: ["healt", "rutine"],
+        //     priority: 3
+        // },
+        // {
+        //     title: "Go to the gym",
+        //     description: "I have to go to the gym the monday at 3pm",
+        //     tags: ["healt", "rutine"],
+        //     priority: 1
+        // },
+        // {
+        //     title: "Go to the gym",
+        //     description: "I have to go to the gym the monday at 3pm",
+        //     tags: ["healt", "rutine"],
+        //     priority: 2
+        // },
+        // {
+        //     title: "Go to the gym",
+        //     description: "I have to go to the gym the monday at 3pm",
+        //     tags: ["healt", "rutine"],
+        //     priority: 3
+        // },
+        // {
+        //     title: "Go to the gym",
+        //     description: "I have to go to the gym the monday at 3pm",
+        //     tags: ["healt", "rutine"],
+        //     priority: 1
+        // },
+        // {
+        //     title: "Go to the gym",
+        //     description: "I have to go to the gym the monday at 3pm",
+        //     tags: ["healt", "rutine"],
+        //     priority: 2
+        // },
+        // {
+        //     title: "Go to the gym",
+        //     description: "I have to go to the gym the monday at 3pm",
+        //     tags: ["healt", "rutine"],
+        //     priority: 3
+        // }
     ]
     console.log(todos.length)
     function displayCard(todo: Todo) {
@@ -101,13 +107,60 @@ export default function ListComponent(props: { address: string | undefined }) {
             </Card>
         )
     }
-
+    const handleChange = (event: React.MouseEvent<HTMLElement>, priority: string) => {
+        setPriority(priority);
+    };
     if (props.address) {
         return (
             <div className="list-container">
-                {todos.length > 0 ? todos.map((todo:any) => {
+                {todos.length > 0 ? todos.map((todo: any) => {
                     return displayCard(todo)
                 }) : displayCard(defaultTodo)}
+                <Card sx={{ minWidth: "30%", maxWidth: "60%", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
+                    <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+                        <TextField
+                            id="title"
+                            label="Title"
+                            placeholder={defaultTodo.title}
+                            // value={name}
+                            // onChange={handleChange}
+                            sx={{ marginBottom: "1em", }}
+                        />
+                        <TextField
+                            sx={{ marginBottom: "1em" }}
+                            id="description"
+                            label="Description"
+                            placeholder={defaultTodo.description}
+                            // value={name}
+                            // onChange={handleChange}
+                            multiline={true}
+                            rows={3}
+                            inputProps={{
+                                style: {
+                                    height: "10em"
+                                }
+                            }}
+                        />
+                        <Box sx={{ display: "flex", flexDirection: "row" }}>
+                            <ToggleButtonGroup
+                                value={priority}
+                                exclusive
+                                onChange={handleChange}
+                                aria-label="text alignment"
+                                sx={{justifyContent:"space-between", width:"200px"}}
+                            >
+                                {priorities.map((priority) => {
+                                    return (
+                                        <ToggleButton value={priority} sx={{ height: "40px", width: "40px", border:"1px solid #0000003b!important" }}>
+                                            {priority}
+                                        </ToggleButton>
+                                    )
+                                })}
+                            </ToggleButtonGroup>
+                        </Box>
+
+                    </CardContent>
+                </Card>
             </div>
         );
     }
