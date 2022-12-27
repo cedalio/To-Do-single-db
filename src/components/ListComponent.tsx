@@ -9,6 +9,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import Box from '@mui/material/Box';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useQuery, gql } from '@apollo/client';
+import TodoInputComponent from "./TodoInputComponent"
 
 
 type Todo = {
@@ -96,12 +97,11 @@ const GET_TODOS = gql`
   }
 `;
 
+
 export default function ListComponent(props: { address: string | undefined }) {
-    const [priority, setPriority] = React.useState("");
     const [todos, setTodos] = React.useState<Todo[]>([]);
 
-    const priorities = [1, 2, 3, 4]
-    
+
     const defaultTodo = {
         title: "This Is Your First ToDo Card!",
         description: "Buy some food for my dog and change their water",
@@ -112,7 +112,7 @@ export default function ListComponent(props: { address: string | undefined }) {
 
     function DisplayCard(props: { todo: Todo }) {
         return (
-            <Card sx={{ minWidth: "30%", maxWidth: "60%", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
+            <Card sx={{ minWidth: "500px", maxWidth: "60%", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
                 <CardContent>
                     <Typography sx={{ fontSize: 23, fontWeight: 600, textAlign: "justify" }} color="black" gutterBottom>
                         {props.todo.title}
@@ -137,13 +137,13 @@ export default function ListComponent(props: { address: string | undefined }) {
 
     React.useEffect(() => {
         if (data) setTodos(data.allTodos);
-      }, [data]);
-    
-      if (loading) return <p>Loading...</p>;
-      if (error) {
-          return <p>Error : {error.message}</p>;
-      }
-      
+    }, [data]);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) {
+        return <p>Error : {error.message}</p>;
+    }
+
     const displayTodos = () => {
         if (todos.length < 1) {
             return <DisplayCard key="default" todo={defaultTodo} />;
@@ -157,57 +157,11 @@ export default function ListComponent(props: { address: string | undefined }) {
         }
     }
 
-    const handleChange = (event: React.MouseEvent<HTMLElement>, priority: string) => {
-        setPriority(priority);
-    };
     if (props.address) {
         return (
             <div className="list-container">
                 {displayTodos()}
-                <Card key="input-card" sx={{ minWidth: "30%", maxWidth: "60%", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
-                    <CardContent sx={{ display: "flex", flexDirection: "column" }}>
-                        <TextField
-                            id="title"
-                            label="Title"
-                            placeholder={defaultTodo.title}
-                            // value={name}
-                            // onChange={handleChange}
-                            sx={{ marginBottom: "1em", }}
-                        />
-                        <TextField
-                            sx={{ marginBottom: "1em" }}
-                            id="description"
-                            label="Description"
-                            placeholder={defaultTodo.description}
-                            // value={name}
-                            // onChange={handleChange}
-                            multiline={true}
-                            rows={3}
-                            inputProps={{
-                                style: {
-                                    height: "10em"
-                                }
-                            }}
-                        />
-                        <Box sx={{ display: "flex", flexDirection: "row" }}>
-                            <ToggleButtonGroup
-                                value={priority}
-                                exclusive
-                                onChange={handleChange}
-                                aria-label="text alignment"
-                                sx={{ justifyContent: "space-between", width: "200px" }}
-                            >
-                                {priorities.map((priority) => {
-                                    return (
-                                        <ToggleButton key={String(priority)} value={priority} sx={{ height: "40px", width: "40px", border: "1px solid #0000003b!important" }}>
-                                            {priority}
-                                        </ToggleButton>
-                                    )
-                                })}
-                            </ToggleButtonGroup>
-                        </Box>
-                    </CardContent>
-                </Card>
+                <TodoInputComponent />
             </div>
         );
     }
