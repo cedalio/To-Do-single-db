@@ -14,9 +14,11 @@ import { Web3Button } from "@web3modal/react";
 import ListComponent from "./components/ListComponent";
 const chains = [polygonMumbai];
 
+const projectId = String(process.env.REACT_APP_WC_PROJECT_ID)
+
 // Wagmi client
 const { provider } = configureChains(chains, [
-  walletConnectProvider({ projectId: "<YOUR_PROJECT_ID>" }),
+  walletConnectProvider({ projectId: projectId }),
 ]);
 const wagmiClient = createClient({
   autoConnect: true,
