@@ -3,13 +3,28 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import { HttpLink } from '@apollo/client';
+const link = new HttpLink({
+  uri: 'http://localhost:8080/graphql',
+  headers:{
+    "Access-Control-Allow-Origin":"*",
+    "Content-Type": "application/json"
+  }
+});
+const client = new ApolloClient({
+  link: link,
+  cache: new InMemoryCache(),
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>,
   </React.StrictMode>
 );
 
