@@ -19,80 +19,80 @@ type Todo = {
     id: string
 }
 
-const todosTest: Array<Todo> = [
-    {
-        title: "Go to the gym",
-        description: "I have to go to the gym the monday at 3pm",
-        tags: ["healt", "rutine"],
-        priority: 1,
-        id: "asdasdasd1"
-    },
-    {
-        title: "Go to the gym",
-        description: "I have to go to the gym the monday at 3pm",
-        tags: ["healt", "rutine"],
-        priority: 2,
-        id: "asdasdasd2"
-    },
-    {
-        title: "Go to the gym",
-        description: "I have to go to the gym the monday at 3pm",
-        tags: ["healt", "rutine"],
-        priority: 3,
-        id: "asdasdasd3"
-    },
-    {
-        title: "Go to the gym",
-        description: "I have to go to the gym the monday at 3pm",
-        tags: ["healt", "rutine"],
-        priority: 1,
-        id: "asdasdasd5"
-    },
-    {
-        title: "Go to the gym",
-        description: "I have to go to the gym the monday at 3pm",
-        tags: ["healt", "rutine"],
-        priority: 2,
-        id: "asdasdasd5"
-    },
-    {
-        title: "Go to the gym",
-        description: "I have to go to the gym the monday at 3pm",
-        tags: ["healt", "rutine"],
-        priority: 3,
-        id: "asdasdasd6"
-    },
-    {
-        title: "Go to the gym",
-        description: "I have to go to the gym the monday at 3pm",
-        tags: ["healt", "rutine"],
-        priority: 1,
-        id: "asdasdasd7"
-    },
-    {
-        title: "Go to the gym",
-        description: "I have to go to the gym the monday at 3pm",
-        tags: ["healt", "rutine"],
-        priority: 2,
-        id: "asdasdasd8"
-    },
-    {
-        title: "Go to the gym",
-        description: "I have to go to the gym the monday at 3pm",
-        tags: ["healt", "rutine"],
-        priority: 3,
-        id: "asdasdasd8"
-    }
-]
+// const todosTest: Array<Todo> = [
+//     {
+//         title: "Go to the gym",
+//         description: "I have to go to the gym the monday at 3pm",
+//         tags: ["healt", "rutine"],
+//         priority: 1,
+//         id: "asdasdasd1"
+//     },
+//     {
+//         title: "Go to the gym",
+//         description: "I have to go to the gym the monday at 3pm",
+//         tags: ["healt", "rutine"],
+//         priority: 2,
+//         id: "asdasdasd2"
+//     },
+//     {
+//         title: "Go to the gym",
+//         description: "I have to go to the gym the monday at 3pm",
+//         tags: ["healt", "rutine"],
+//         priority: 3,
+//         id: "asdasdasd3"
+//     },
+//     {
+//         title: "Go to the gym",
+//         description: "I have to go to the gym the monday at 3pm",
+//         tags: ["healt", "rutine"],
+//         priority: 1,
+//         id: "asdasdasd5"
+//     },
+//     {
+//         title: "Go to the gym",
+//         description: "I have to go to the gym the monday at 3pm",
+//         tags: ["healt", "rutine"],
+//         priority: 2,
+//         id: "asdasdasd5"
+//     },
+//     {
+//         title: "Go to the gym",
+//         description: "I have to go to the gym the monday at 3pm",
+//         tags: ["healt", "rutine"],
+//         priority: 3,
+//         id: "asdasdasd6"
+//     },
+//     {
+//         title: "Go to the gym",
+//         description: "I have to go to the gym the monday at 3pm",
+//         tags: ["healt", "rutine"],
+//         priority: 1,
+//         id: "asdasdasd7"
+//     },
+//     {
+//         title: "Go to the gym",
+//         description: "I have to go to the gym the monday at 3pm",
+//         tags: ["healt", "rutine"],
+//         priority: 2,
+//         id: "asdasdasd8"
+//     },
+//     {
+//         title: "Go to the gym",
+//         description: "I have to go to the gym the monday at 3pm",
+//         tags: ["healt", "rutine"],
+//         priority: 3,
+//         id: "asdasdasd8"
+//     }
+// ]
 
 const GET_TODOS = gql`
-  query {
-    allTodos {
-      id
-      title
-      description
-      priority
-    }
+  query GetTodos{
+        allTodos {
+            id
+            title
+            description
+            priority
+        }
   }
 `;
 
@@ -101,7 +101,7 @@ export default function ListComponent(props: { address: string | undefined }) {
     const [todos, setTodos] = React.useState<Todo[]>([]);
 
     const priorities = [1, 2, 3, 4]
-
+    
     const defaultTodo = {
         title: "This Is Your First ToDo Card!",
         description: "Buy some food for my dog and change their water",
@@ -123,9 +123,9 @@ export default function ListComponent(props: { address: string | undefined }) {
                     <Stack spacing={1} alignItems="left">
                         <Stack direction="row" spacing={1}>
                             <Chip color="error" label={`P${props.todo.priority}`} sx={{ fontWeight: "600", backgroundColor: "hsl(0deg 86% 97%)", color: "hsl(347deg 77% 56%)" }}></Chip>
-                            {props.todo.tags.map((tag) => {
+                            {/* {props.todo.tags.map((tag) => {
                                 return <Chip label={tag} key={tag} color="success" sx={{ fontWeight: "600", backgroundColor: "hsl(138deg 76% 97%)", color: "hsl(142deg 61% 42%)" }} />
-                            })}
+                            })} */}
                         </Stack>
                     </Stack>
                 </CardContent>
@@ -134,14 +134,16 @@ export default function ListComponent(props: { address: string | undefined }) {
     }
 
     const { loading, error, data } = useQuery(GET_TODOS);
-    if (loading) return <p>Loading...</p>;
-    if (error) {
-        console.log(`Error : ${error.message}`)
-    }
-    if (data) (
-        setTodos(data.allTodos)
-    )
 
+    React.useEffect(() => {
+        if (data) setTodos(data.allTodos);
+      }, [data]);
+    
+      if (loading) return <p>Loading...</p>;
+      if (error) {
+          return <p>Error : {error.message}</p>;
+      }
+      
     const displayTodos = () => {
         if (todos.length < 1) {
             return <DisplayCard key="default" todo={defaultTodo} />;
