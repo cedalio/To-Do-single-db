@@ -35,7 +35,8 @@ export default function TodoInputComponent() {
     const [priority, setPriority] = React.useState("");
     const [title, setTitle] = React.useState("");
     const [description, setDescription] = React.useState("");
-
+    const [titleError, setTitleError] = React.useState(false);
+    const [descriptionError, setDescriptionError] = React.useState(false);
     const priorities = [1, 2, 3, 4]
 
     const [createTodo, { data, loading, error }] = useMutation(CREATE_TODO);
@@ -52,6 +53,7 @@ export default function TodoInputComponent() {
             <Card key="input-card" sx={{ minWidth: "30%", maxWidth: "60%", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
                 <CardContent sx={{ display: "flex", flexDirection: "column" }}>
                     <TextField
+                        error={titleError}
                         id="title"
                         label="Title"
                         placeholder={defaultTodo.title}
@@ -62,6 +64,7 @@ export default function TodoInputComponent() {
                         sx={{ marginBottom: "1em", }}
                     />
                     <TextField
+                        error={descriptionError}
                         sx={{ marginBottom: "1em" }}
                         id="description"
                         label="Description"
@@ -82,6 +85,7 @@ export default function TodoInputComponent() {
                         <ToggleButtonGroup
                             value={priority}
                             exclusive
+                            defaultValue={1}
                             onChange={handleChange}
                             aria-label="text alignment"
                             sx={{ justifyContent: "space-between", width: "200px" }}
@@ -106,7 +110,12 @@ export default function TodoInputComponent() {
                     <ClearIcon />
                 </Fab>
                 <Fab onClick={(e) => {
-                    createTodo({ variables: { title: title, description: description, priority: priority } })
+                    if(title && description){
+                        createTodo({ variables: { title: title, description: description, priority: priority } })
+                    }else{
+                        setTitleError(true)
+                        setDescriptionError(true)
+                    }
                 }} sx={{ backgroundColor: "#0000003d" }} aria-label="add">
                     <CheckIcon />
                 </Fab>
