@@ -4,10 +4,6 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
-import TextField from '@mui/material/TextField';
-import ToggleButton from '@mui/material/ToggleButton';
-import Box from '@mui/material/Box';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { useQuery, gql } from '@apollo/client';
 import TodoInputComponent from "./TodoInputComponent"
 
@@ -100,6 +96,7 @@ const GET_TODOS = gql`
 
 export default function ListComponent(props: { address: string | undefined }) {
     const [todos, setTodos] = React.useState<Todo[]>([]);
+    const [newTodo, setNewTodo] = React.useState<Todo>();
 
 
     const defaultTodo = {
@@ -139,6 +136,12 @@ export default function ListComponent(props: { address: string | undefined }) {
         if (data) setTodos(data.allTodos);
     }, [data]);
 
+    React.useEffect(() => {
+        if (newTodo) {
+            setTodos(n => [...n, newTodo])
+        }
+    }, [newTodo])
+
     if (loading) return <p>Loading...</p>;
     if (error) {
         return <p>Error : {error.message}</p>;
@@ -161,7 +164,7 @@ export default function ListComponent(props: { address: string | undefined }) {
         return (
             <div className="list-container">
                 {displayTodos()}
-                <TodoInputComponent />
+                <TodoInputComponent setState={setNewTodo}/>
             </div>
         );
     }

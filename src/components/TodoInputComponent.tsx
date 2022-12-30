@@ -17,6 +17,8 @@ const CREATE_TODO = gql`
     createTodo(todo: {title: $title, description:$description, priority:$priority }){
         id
         title
+        description
+        priority
     }
   }
 `;
@@ -31,7 +33,9 @@ const defaultTodo = {
 
 
 
-export default function TodoInputComponent() {
+export default function TodoInputComponent(props: {
+    setState: React.Dispatch<React.SetStateAction<any>>;
+}) {
     const [priority, setPriority] = React.useState("");
     const [title, setTitle] = React.useState("");
     const [description, setDescription] = React.useState("");
@@ -41,12 +45,25 @@ export default function TodoInputComponent() {
 
     const [createTodo, { data, loading, error }] = useMutation(CREATE_TODO);
 
+    React.useEffect(() => {
+        if (data) {
+            props.setState(data.createTodo)
+            clearInputs()
+        }
+    }, [data])
+
     if (loading) return <h1>Submitting...</h1>;
     if (error) return <h1>Submission error! {error.message}</h1>;
+
 
     const handleChange = (event: React.MouseEvent<HTMLElement>, priority: string) => {
         setPriority(priority);
     };
+
+    function clearInputs(){
+        setTitle("")
+        setDescription("")
+    }
 
     return (
         <div className="list-container">
@@ -104,15 +121,14 @@ export default function TodoInputComponent() {
             </Card>
             <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", minWidth: "200px", marginBottom: "2em" }}>
                 <Fab onClick={(e) => {
-                    setTitle("")
-                    setDescription("")
+                   clearInputs()
                 }} sx={{ backgroundColor: "#0000003d" }} aria-label="add">
                     <ClearIcon />
                 </Fab>
                 <Fab onClick={(e) => {
-                    if(title && description){
+                    if (title && description) {
                         createTodo({ variables: { title: title, description: description, priority: priority } })
-                    }else{
+                    } else {
                         setTitleError(true)
                         setDescriptionError(true)
                     }
