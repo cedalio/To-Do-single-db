@@ -13,12 +13,13 @@ import { useMutation, gql } from '@apollo/client';
 
 
 const CREATE_TODO = gql`
-  mutation CreateTodo($title:String!, $description:String, $priority:Int!){
-    createTodo(todo: {title: $title, description:$description, priority:$priority }){
+  mutation CreateTodo($title:String!, $description:String, $priority:Int!, $owner:String!){
+    createTodo(todo: {title: $title, description:$description, priority:$priority, owner:$owner }){
         id
         title
         description
         priority
+        owner
     }
   }
 `;
@@ -34,7 +35,7 @@ const defaultTodo = {
 
 
 export default function TodoInputComponent(props: {
-    setState: React.Dispatch<React.SetStateAction<any>>;
+    setState: React.Dispatch<React.SetStateAction<any>>, address: string
 }) {
     const [priority, setPriority] = React.useState("");
     const [title, setTitle] = React.useState("");
@@ -60,7 +61,7 @@ export default function TodoInputComponent(props: {
         setPriority(priority);
     };
 
-    function clearInputs(){
+    function clearInputs() {
         setTitle("")
         setDescription("")
     }
@@ -121,13 +122,13 @@ export default function TodoInputComponent(props: {
             </Card>
             <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", minWidth: "200px", marginBottom: "2em" }}>
                 <Fab onClick={(e) => {
-                   clearInputs()
+                    clearInputs()
                 }} sx={{ backgroundColor: "#0000003d" }} aria-label="add">
                     <ClearIcon />
                 </Fab>
                 <Fab onClick={(e) => {
                     if (title && description) {
-                        createTodo({ variables: { title: title, description: description, priority: priority } })
+                        createTodo({ variables: { title: title, description: description, priority: priority, owner: props.address } })
                     } else {
                         setTitleError(true)
                         setDescriptionError(true)

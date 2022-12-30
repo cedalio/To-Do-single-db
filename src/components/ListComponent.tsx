@@ -164,7 +164,7 @@ export default function ListComponent(props: { address: string | undefined }) {
         return (
             <div className="list-container">
                 {displayTodos()}
-                <TodoInputComponent setState={setNewTodo}/>
+                <TodoInputComponent setState={setNewTodo} address={props.address}/>
             </div>
         );
     }
