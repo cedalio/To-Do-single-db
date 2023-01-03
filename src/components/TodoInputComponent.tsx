@@ -122,6 +122,7 @@ export default function TodoInputComponent(props: {
                                 )
                             })}
                         </ToggleButtonGroup>
+                        {/* THIS COMPONENT ITS USED TO SET THE TAGS */}
                         <TagSelect setState={setTagsIds} />
                     </Box>
                 </CardContent>
@@ -134,7 +135,7 @@ export default function TodoInputComponent(props: {
                 </Fab>
                 <Fab onClick={(e) => {
                     if (title && description) {
-                        createTodo({ variables: { title: title, description: description, priority: priority, owner: props.address, tags: tagsIds} })
+                        createTodo({ variables: { title: title, description: description, priority: priority, owner: props.address, tags: tagsIds } })
                     } else {
                         setTitleError(true)
                         setDescriptionError(true)

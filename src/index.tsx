@@ -7,8 +7,8 @@ import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client
 import { HttpLink } from '@apollo/client';
 const link = new HttpLink({
   uri: 'http://localhost:8080/graphql',
-  headers:{
-    "Access-Control-Allow-Origin":"*",
+  headers: {
+    "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/json"
   }
 });

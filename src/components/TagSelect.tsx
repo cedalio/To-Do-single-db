@@ -39,7 +39,7 @@ export default function TagSelect(props: {
     }, [data]);
 
     if (loading) return <></>;
-    
+
     if (error) {
         return <p>Error : {error.message}</p>;
     }

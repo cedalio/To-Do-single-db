@@ -38,10 +38,10 @@ export default function App() {
       <div className="App">
         <WagmiConfig client={wagmiClient}>
           <Header />
-          <div className={address ? `button-container connected` : `button-container` } >
+          <div className={address ? `button-container connected` : `button-container`} >
             <Web3Button />
           </div>
-          <ListComponent address={address}/>
+          <ListComponent address={address} />
           <Web3Modal
             projectId={projectId}
             ethereumClient={ethereumClient}
