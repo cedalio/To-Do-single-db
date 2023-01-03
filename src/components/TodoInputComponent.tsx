@@ -9,12 +9,11 @@ import Fab from '@mui/material/Fab';
 import ClearIcon from '@mui/icons-material/Clear';
 import CheckIcon from '@mui/icons-material/Check';
 import { useMutation, gql } from '@apollo/client';
-
-
+import TagSelect from './TagSelect'
 
 const CREATE_TODO = gql`
-  mutation CreateTodo($title:String!, $description:String, $priority:Int!, $owner:String!){
-    createTodo(todo: {title: $title, description:$description, priority:$priority, owner:$owner }){
+  mutation CreateTodo($title:String!, $description:String, $priority:Int!, $owner:String!,$tags:[string]){
+    createTodo(todo: {title: $title, description:$description, priority:$priority, owner:$owner, tags:$tags }){
         id
         title
         description
@@ -32,8 +31,6 @@ const defaultTodo = {
     id: "abcdefg12345"
 }
 
-
-
 export default function TodoInputComponent(props: {
     setState: React.Dispatch<React.SetStateAction<any>>, address: string
 }) {
@@ -42,6 +39,7 @@ export default function TodoInputComponent(props: {
     const [description, setDescription] = React.useState("");
     const [titleError, setTitleError] = React.useState(false);
     const [descriptionError, setDescriptionError] = React.useState(false);
+    const [tagsIds, setTagsIds] = React.useState<string[]>([]);
     const priorities = [1, 2, 3, 4]
 
     const [createTodo, { data, loading, error }] = useMutation(CREATE_TODO);
@@ -52,6 +50,10 @@ export default function TodoInputComponent(props: {
             clearInputs()
         }
     }, [data])
+
+    React.useEffect(() => {
+        console.log(tagsIds)
+    }, [tagsIds])
 
     if (loading) return <h1>Submitting...</h1>;
     if (error) return <h1>Submission error! {error.message}</h1>;
@@ -99,24 +101,24 @@ export default function TodoInputComponent(props: {
                             }
                         }}
                     />
-                    <Box sx={{ display: "flex", flexDirection: "row", minWidth: "800px" }}>
+                    <Box sx={{ display: "flex", flexDirection: "row", width: "800px" }}>
                         <ToggleButtonGroup
                             value={priority}
                             exclusive
                             defaultValue={1}
                             onChange={handleChange}
                             aria-label="text alignment"
-                            sx={{ justifyContent: "space-between", width: "200px" }}
+                            sx={{ justifyContent: "space-between", width: "250px" }}
                         >
                             {priorities.map((priority) => {
                                 return (
-                                    <ToggleButton key={String(priority)} value={priority} sx={{ height: "40px", width: "40px", border: "1px solid #0000003b!important" }}>
+                                    <ToggleButton key={String(priority)} value={priority} sx={{ height: "50px", width: "50px", border: "1px solid #0000003b!important" }}>
                                         {priority}
                                     </ToggleButton>
                                 )
                             })}
                         </ToggleButtonGroup>
-
+                        <TagSelect setState={setTagsIds} />
                     </Box>
                 </CardContent>
             </Card>

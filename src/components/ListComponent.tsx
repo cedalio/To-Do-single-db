@@ -17,71 +17,6 @@ type Todo = {
     owner: string
 }
 
-// const todosTest: Array<Todo> = [
-//     {
-//         title: "Go to the gym",
-//         description: "I have to go to the gym the monday at 3pm",
-//         tags: ["healt", "rutine"],
-//         priority: 1,
-//         id: "asdasdasd1"
-//     },
-//     {
-//         title: "Go to the gym",
-//         description: "I have to go to the gym the monday at 3pm",
-//         tags: ["healt", "rutine"],
-//         priority: 2,
-//         id: "asdasdasd2"
-//     },
-//     {
-//         title: "Go to the gym",
-//         description: "I have to go to the gym the monday at 3pm",
-//         tags: ["healt", "rutine"],
-//         priority: 3,
-//         id: "asdasdasd3"
-//     },
-//     {
-//         title: "Go to the gym",
-//         description: "I have to go to the gym the monday at 3pm",
-//         tags: ["healt", "rutine"],
-//         priority: 1,
-//         id: "asdasdasd5"
-//     },
-//     {
-//         title: "Go to the gym",
-//         description: "I have to go to the gym the monday at 3pm",
-//         tags: ["healt", "rutine"],
-//         priority: 2,
-//         id: "asdasdasd5"
-//     },
-//     {
-//         title: "Go to the gym",
-//         description: "I have to go to the gym the monday at 3pm",
-//         tags: ["healt", "rutine"],
-//         priority: 3,
-//         id: "asdasdasd6"
-//     },
-//     {
-//         title: "Go to the gym",
-//         description: "I have to go to the gym the monday at 3pm",
-//         tags: ["healt", "rutine"],
-//         priority: 1,
-//         id: "asdasdasd7"
-//     },
-//     {
-//         title: "Go to the gym",
-//         description: "I have to go to the gym the monday at 3pm",
-//         tags: ["healt", "rutine"],
-//         priority: 2,
-//         id: "asdasdasd8"
-//     },
-//     {
-//         title: "Go to the gym",
-//         description: "I have to go to the gym the monday at 3pm",
-//         tags: ["healt", "rutine"],
-//         priority: 3,
-//         id: "asdasdasd8"
-//     }
-// ]
 
 const GET_TODOS = gql`
   query GetTodos{
@@ -99,8 +34,8 @@ const GET_TODOS = gql`
 export default function ListComponent(props: { address: string | undefined }) {
     const [todos, setTodos] = React.useState<Todo[]>([]);
     const [newTodo, setNewTodo] = React.useState<Todo>();
-    
-    const ownerAddress:string = String(props.address)
+
+    const ownerAddress: string = String(props.address)
 
     const defaultTodo = {
         title: "This Is Your First ToDo Card!",
@@ -113,7 +48,7 @@ export default function ListComponent(props: { address: string | undefined }) {
 
     function DisplayCard(props: { todo: Todo }) {
 
-        if (props.todo.owner === ownerAddress) {
+        if (props.todo.owner === ownerAddress || props.todo.owner === defaultTodo.owner) {
             return (
                 <Card sx={{ minWidth: "500px", maxWidth: "60%", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
                     <CardContent>
@@ -126,16 +61,16 @@ export default function ListComponent(props: { address: string | undefined }) {
                         <Stack spacing={1} alignItems="left">
                             <Stack direction="row" spacing={1}>
                                 <Chip color="error" label={`P${props.todo.priority}`} sx={{ fontWeight: "600", backgroundColor: "hsl(0deg 86% 97%)", color: "hsl(347deg 77% 56%)" }}></Chip>
-                                {/* {props.todo.tags.map((tag) => {
+                                {props.todo.tags.map((tag) => {
                                     return <Chip label={tag} key={tag} color="success" sx={{ fontWeight: "600", backgroundColor: "hsl(138deg 76% 97%)", color: "hsl(142deg 61% 42%)" }} />
-                                })} */}
+                                })}
                             </Stack>
                         </Stack>
                     </CardContent>
                 </Card>
             )
         }
-        else{
+        else {
             return <></>
         }
     }
@@ -158,7 +93,7 @@ export default function ListComponent(props: { address: string | undefined }) {
     }
 
     const displayTodos = () => {
-        if (todos.length < 1) {
+        if (todos.length === 0) {
             return <DisplayCard key="default" todo={defaultTodo} />;
         }
         else {
