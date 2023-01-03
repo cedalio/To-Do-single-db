@@ -26,10 +26,13 @@ const GET_TODOS = gql`
             description
             priority
             owner
+            tags{
+                id
+                name
+            }
         }
   }
 `;
-
 
 export default function ListComponent(props: { address: string | undefined }) {
     const [todos, setTodos] = React.useState<Todo[]>([]);
@@ -61,8 +64,8 @@ export default function ListComponent(props: { address: string | undefined }) {
                         <Stack spacing={1} alignItems="left">
                             <Stack direction="row" spacing={1}>
                                 <Chip color="error" label={`P${props.todo.priority}`} sx={{ fontWeight: "600", backgroundColor: "hsl(0deg 86% 97%)", color: "hsl(347deg 77% 56%)" }}></Chip>
-                                {props.todo.tags.map((tag) => {
-                                    return <Chip label={tag} key={tag} color="success" sx={{ fontWeight: "600", backgroundColor: "hsl(138deg 76% 97%)", color: "hsl(142deg 61% 42%)" }} />
+                                {props.todo.tags.map((tag:any) => {
+                                    return <Chip label={tag.name} key={tag.id} color="success" sx={{ fontWeight: "600", backgroundColor: "hsl(138deg 76% 97%)", color: "hsl(142deg 61% 42%)" }} />
                                 })}
                             </Stack>
                         </Stack>

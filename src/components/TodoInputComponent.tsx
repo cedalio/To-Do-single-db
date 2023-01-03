@@ -12,13 +12,17 @@ import { useMutation, gql } from '@apollo/client';
 import TagSelect from './TagSelect'
 
 const CREATE_TODO = gql`
-  mutation CreateTodo($title:String!, $description:String, $priority:Int!, $owner:String!,$tags:[string]){
+  mutation CreateTodo($title:String!, $description:String, $priority:Int!, $owner:String!,$tags:String){
     createTodo(todo: {title: $title, description:$description, priority:$priority, owner:$owner, tags:$tags }){
         id
         title
         description
         priority
         owner
+        tags{
+            id
+            name
+        }
     }
   }
 `;
@@ -130,7 +134,7 @@ export default function TodoInputComponent(props: {
                 </Fab>
                 <Fab onClick={(e) => {
                     if (title && description) {
-                        createTodo({ variables: { title: title, description: description, priority: priority, owner: props.address } })
+                        createTodo({ variables: { title: title, description: description, priority: priority, owner: props.address, tags: tagsIds} })
                     } else {
                         setTitleError(true)
                         setDescriptionError(true)

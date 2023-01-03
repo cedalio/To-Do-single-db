@@ -20,26 +20,16 @@ const GET_TAGS = gql`
   }
 `;
 
-
 export default function TagSelect(props: {
     setState: React.Dispatch<React.SetStateAction<any>>
 }) {
     const [tag, setTag] = React.useState<string[]>([]);
     const [tags, setTags] = React.useState<Tag[]>([]);
 
-    const handleChange = (event: SelectChangeEvent<typeof tag>) => {
-        const {
-            target: { value },
-        } = event;
-
-        console.log(typeof value)
-
-        setTag(
-            // On autofill we get a stringified value.
-            typeof value === 'string' ? value.split(',') : value,
-        );
-        props.setState(value)
-
+    const handleChange = (event: SelectChangeEvent<string[]>) => {
+        const value = event.target.value as string[];
+        setTag(value);
+        props.setState(value.map(name => tags.find(tag => tag.name === name)?.id || ""));
     };
 
     const { loading, error, data } = useQuery(GET_TAGS);
@@ -49,10 +39,10 @@ export default function TagSelect(props: {
     }, [data]);
 
     if (loading) return <></>;
+    
     if (error) {
         return <p>Error : {error.message}</p>;
     }
-
 
     return (
         <div>
