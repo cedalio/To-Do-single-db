@@ -9,7 +9,11 @@ import Fab from '@mui/material/Fab';
 import ClearIcon from '@mui/icons-material/Clear';
 import CheckIcon from '@mui/icons-material/Check';
 import { useMutation, gql } from '@apollo/client';
-import TagSelect from './TagSelect'
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import OutlinedInput from '@mui/material/OutlinedInput';
 
 const CREATE_TODO = gql`
   mutation CreateTodo($title:String!, $description:String, $priority:Int!, $owner:String!,$tags:String){
@@ -19,10 +23,7 @@ const CREATE_TODO = gql`
         description
         priority
         owner
-        tags{
-            id
-            name
-        }
+        tags
     }
   }
 `;
@@ -35,6 +36,12 @@ const defaultTodo = {
     id: "abcdefg12345"
 }
 
+const tagsOptions = [
+    'health',
+    'rutine',
+    'go to market'
+]
+
 export default function TodoInputComponent(props: {
     setState: React.Dispatch<React.SetStateAction<any>>, address: string
 }) {
@@ -43,7 +50,8 @@ export default function TodoInputComponent(props: {
     const [description, setDescription] = React.useState("");
     const [titleError, setTitleError] = React.useState(false);
     const [descriptionError, setDescriptionError] = React.useState(false);
-    const [tagsIds, setTagsIds] = React.useState<string[]>([]);
+    // const [tags, setTags] = React.useState<string[]>([]);
+    const [tag, setTag] = React.useState<string[]>([]);
     const priorities = [1, 2, 3, 4]
 
     const [createTodo, { data, loading, error }] = useMutation(CREATE_TODO);
@@ -55,15 +63,11 @@ export default function TodoInputComponent(props: {
         }
     }, [data])
 
-    React.useEffect(() => {
-        console.log(tagsIds)
-    }, [tagsIds])
-
     if (loading) return <h1>Submitting...</h1>;
     if (error) return <h1>Submission error! {error.message}</h1>;
 
 
-    const handleChange = (event: React.MouseEvent<HTMLElement>, priority: string) => {
+    const handleChangePriorities = (event: React.MouseEvent<HTMLElement>, priority: string) => {
         setPriority(priority);
     };
 
@@ -71,6 +75,11 @@ export default function TodoInputComponent(props: {
         setTitle("")
         setDescription("")
     }
+
+    const handleChangeTagsSelect = (event: SelectChangeEvent<string[]>) => {
+        const value = event.target.value as string[];
+        setTag(value);
+    };
 
     return (
         <div className="list-container">
@@ -110,7 +119,7 @@ export default function TodoInputComponent(props: {
                             value={priority}
                             exclusive
                             defaultValue={1}
-                            onChange={handleChange}
+                            onChange={handleChangePriorities}
                             aria-label="text alignment"
                             sx={{ justifyContent: "space-between", width: "250px" }}
                         >
@@ -122,8 +131,26 @@ export default function TodoInputComponent(props: {
                                 )
                             })}
                         </ToggleButtonGroup>
-                        {/* THIS COMPONENT ITS USED TO SET THE TAGS */}
-                        <TagSelect setState={setTagsIds} />
+                        <FormControl sx={{ width: 170, marginLeft: "50px" }}>
+                            <InputLabel id="tags-label">Tags</InputLabel>
+                            <Select
+                                labelId="tags-label"
+                                id="tags"
+                                multiple
+                                value={tag}
+                                onChange={handleChangeTagsSelect}
+                                input={<OutlinedInput label="Tags" />}
+                            >
+                                {tagsOptions.map((tag: string) => (
+                                    <MenuItem
+                                        key={tag}
+                                        value={tag}
+                                    >
+                                        {tag}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
                     </Box>
                 </CardContent>
             </Card>
@@ -135,7 +162,7 @@ export default function TodoInputComponent(props: {
                 </Fab>
                 <Fab onClick={(e) => {
                     if (title && description) {
-                        createTodo({ variables: { title: title, description: description, priority: priority, owner: props.address, tags: tagsIds } })
+                        createTodo({ variables: { title: title, description: description, priority: priority, owner: props.address, tags: tag } })
                     } else {
                         setTitleError(true)
                         setDescriptionError(true)
