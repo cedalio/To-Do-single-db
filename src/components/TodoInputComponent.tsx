@@ -15,6 +15,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
+//GRAPHQL query template, this will be replaced by the variables
 const CREATE_TODO = gql`
   mutation CreateTodo($title:String!, $description:String, $priority:Int!, $owner:String!,$tags:String){
     createTodo(todo: {title: $title, description:$description, priority:$priority, owner:$owner, tags:$tags }){
@@ -28,6 +29,7 @@ const CREATE_TODO = gql`
   }
 `;
 
+//The TO-DO default if we dont have any
 const defaultTodo = {
     title: "This Is Your First ToDo Card!",
     description: "Buy some food for my dog and change their water",
@@ -50,7 +52,6 @@ export default function TodoInputComponent(props: {
     const [description, setDescription] = React.useState("");
     const [titleError, setTitleError] = React.useState(false);
     const [descriptionError, setDescriptionError] = React.useState(false);
-    // const [tags, setTags] = React.useState<string[]>([]);
     const [tag, setTag] = React.useState<string[]>([]);
     const priorities = [1, 2, 3, 4]
 
