@@ -62,3 +62,19 @@
   flex-direction: column;
   align-items: center;
 }
+
+.container{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.delete-container{
+  background-image: url("../public/del.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.done-container{
+  background-image: url("../public/check.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
