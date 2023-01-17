@@ -1,8 +1,8 @@
 import * as React from 'react';
 import CardComponent from './CardComponent';
-
 import { useQuery, gql } from '@apollo/client';
 import TodoInputComponent from "./TodoInputComponent"
+import { DragDropContext, Droppable } from "react-beautiful-dnd"
 
 
 type Todo = {
@@ -46,8 +46,6 @@ export default function ListComponent(props: { address: string | undefined }) {
         status: "ready"
     }
 
-
-
     const { loading, error, data } = useQuery(GET_TODOS);
 
     React.useEffect(() => {
@@ -67,23 +65,34 @@ export default function ListComponent(props: { address: string | undefined }) {
 
     const displayTodos = () => {
         if (todos.length === 0) {
-            return <CardComponent key="default" todo={defaultTodo} ownerAddress={defaultTodo.owner} setState={setTodos}/>;
+            return <CardComponent key="default" todo={defaultTodo} ownerAddress={defaultTodo.owner} setState={setTodos} index={1}/>;
         }
         else {
             return (
-                todos.map((todo: Todo) => (
-                    <CardComponent key={todo.id} todo={todo} ownerAddress={ownerAddress} setState={setTodos}/>
+                todos.map((todo: Todo, index) => (
+                    <CardComponent key={todo.id} todo={todo} ownerAddress={ownerAddress} setState={setTodos} index={index}/>
                 ))
             )
         }
     }
 
+    function onDragEnd(result: any) {
+        console.log(result)
+    }
+
     if (props.address) {
         return (
-            <div className="list-container">
-                {displayTodos()}
+            <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId='ready'>
+                    {(provided) => (
+                        <div {...provided.droppableProps} ref={provided.innerRef} className="list-container">
+                            {displayTodos()}
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
                 <TodoInputComponent setState={setNewTodo} address={ownerAddress} />
-            </div>
+            </DragDropContext>
         );
     }
     else return null
