@@ -1,8 +1,25 @@
+import * as React from 'react';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Card from '@mui/material/Card';
+import Button from '@mui/material/Button';
+import { useMutation, gql } from '@apollo/client';
+
+const UPDATE_TODO = gql`
+  mutation UpdateTodo($id:UUID!, $status:String){
+    updateTodo(id: $id, fields:{status: $status} ){
+        id
+        title
+        description
+        priority
+        owner
+        tags
+        status
+    }
+  }
+`;
 
 type Todo = {
     title: string,
@@ -11,11 +28,23 @@ type Todo = {
     priority: number,
     id: string,
     owner: string,
+    status: string
 }
 
-export default function CardComponent(props: { todo: Todo, ownerAddress: String }) {
+export default function CardComponent(props: { setState: React.Dispatch<React.SetStateAction<any>>, todo: Todo, ownerAddress: String }) {
+    const [updateTodo, { data, loading, error }] = useMutation(UPDATE_TODO);
 
-    if (props.todo.owner === props.ownerAddress) {
+    React.useEffect(() => {
+        if (data) {
+            props.setState((current: any) =>
+                current.filter((todo: any) => todo.id !== data.updateTodo.id)
+            )
+        }
+    }, [data])
+
+    if (error) return <h1>Submission error! {error.message}</h1>;
+    if (loading) return <h1>Submitting...</h1>;
+    if (props.todo.owner === props.ownerAddress && props.todo.status === "ready") {
         return (
             <Card sx={{ minWidth: "500px", maxWidth: "60%", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
                 <CardContent>
@@ -34,6 +63,12 @@ export default function CardComponent(props: { todo: Todo, ownerAddress: String 
                         </Stack>
                     </Stack>
                 </CardContent>
+                <Button variant="contained" onClick={(e) => {
+                    updateTodo({ variables: { id: props.todo.id, status: "deleted" } })
+                }}>Delete</Button>
+                <Button variant="outlined" onClick={(e) => {
+                    updateTodo({ variables: { id: props.todo.id, status: "done" } })
+                }}>Done</Button>
             </Card>
         )
     }

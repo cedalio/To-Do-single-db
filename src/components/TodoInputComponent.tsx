@@ -17,14 +17,15 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 
 //GRAPHQL query template, this will be replaced by the variables
 const CREATE_TODO = gql`
-  mutation CreateTodo($title:String!, $description:String, $priority:Int!, $owner:String!,$tags:String){
-    createTodo(todo: {title: $title, description:$description, priority:$priority, owner:$owner, tags:$tags }){
+  mutation CreateTodo($title:String!, $description:String, $priority:Int!, $owner:String!,$tags:String, $status:String){
+    createTodo(todo: {title: $title, description:$description, priority:$priority, owner:$owner, tags:$tags, status: $status }){
         id
         title
         description
         priority
         owner
         tags
+        status
     }
   }
 `;
@@ -163,7 +164,7 @@ export default function TodoInputComponent(props: {
                 </Fab>
                 <Fab onClick={(e) => {
                     if (title && description) {
-                        createTodo({ variables: { title: title, description: description, priority: priority, owner: props.address, tags: tag } })
+                        createTodo({ variables: { title: title, description: description, priority: priority, owner: props.address, tags: tag, status:"ready" } })
                     } else {
                         setTitleError(true)
                         setDescriptionError(true)
