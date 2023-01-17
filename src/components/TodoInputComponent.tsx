@@ -42,7 +42,7 @@ const defaultTodo = {
 const tagsOptions = [
     'health',
     'rutine',
-    'go to market'
+    'market'
 ]
 
 export default function TodoInputComponent(props: {

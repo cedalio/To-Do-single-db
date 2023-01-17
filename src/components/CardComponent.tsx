@@ -32,8 +32,9 @@ type Todo = {
     status: string
 }
 
-export default function CardComponent(props: { setState: React.Dispatch<React.SetStateAction<any>>, todo: Todo, ownerAddress: String, index: any }) {
+export default function CardComponent(props: { setState: React.Dispatch<React.SetStateAction<any>>, todo: Todo, ownerAddress: String, index: any, updateState: String }) {
     const [updateTodo, { data, loading, error }] = useMutation(UPDATE_TODO);
+    const isInitialRender = React.useRef(true);
 
     React.useEffect(() => {
         if (data) {
@@ -43,11 +44,21 @@ export default function CardComponent(props: { setState: React.Dispatch<React.Se
         }
     }, [data])
 
+    React.useEffect(() => {
+        if (isInitialRender.current) {
+            isInitialRender.current = false;
+        } else {
+            console.log(props.updateState);
+        }
+    }, [props.updateState])
+
     if (error) return <h1>Submission error! {error.message}</h1>;
     if (loading) return <h1>Submitting...</h1>;
+
+
     if (props.todo.owner === props.ownerAddress && props.todo.status === "ready") {
         return (
-            <Draggable draggableId={props.todo.id} index={props.index}>
+            <Draggable draggableId={props.todo.id} index={props.index} >
                 {(provided) => (
                     <div draggable {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef}>
                         <Card draggable sx={{ minWidth: "500px", maxWidth: "60%", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
@@ -68,7 +79,7 @@ export default function CardComponent(props: { setState: React.Dispatch<React.Se
                                 </Stack>
                             </CardContent>
                             <Button variant="contained" onClick={(e) => {
-                                updateTodo({ variables: { id: props.todo.id, status: "deleted" } })
+
                             }}>Delete</Button>
                             <Button variant="outlined" onClick={(e) => {
                                 updateTodo({ variables: { id: props.todo.id, status: "done" } })

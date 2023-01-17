@@ -30,10 +30,12 @@ const GET_TODOS = gql`
   }
 `;
 
+
+
 export default function ListComponent(props: { address: string | undefined }) {
     const [todos, setTodos] = React.useState<Todo[]>([]);
     const [newTodo, setNewTodo] = React.useState<Todo>();
-
+    const [update, setUpdate] = React.useState("");
     const ownerAddress: string = String(props.address)
 
     const defaultTodo = {
@@ -65,35 +67,53 @@ export default function ListComponent(props: { address: string | undefined }) {
 
     const displayTodos = () => {
         if (todos.length === 0) {
-            return <CardComponent key="default" todo={defaultTodo} ownerAddress={defaultTodo.owner} setState={setTodos} index={1}/>;
+            return <CardComponent key="default" todo={defaultTodo} ownerAddress={defaultTodo.owner} setState={setTodos} index={1} updateState={update}/>;
         }
         else {
             return (
                 todos.map((todo: Todo, index) => (
-                    <CardComponent key={todo.id} todo={todo} ownerAddress={ownerAddress} setState={setTodos} index={index}/>
+                    <CardComponent key={todo.id} todo={todo} ownerAddress={ownerAddress} setState={setTodos} index={index} updateState={update}/>
                 ))
             )
         }
     }
 
     function onDragEnd(result: any) {
-        console.log(result)
+        setUpdate(result.destination.droppableId)
     }
 
     if (props.address) {
         return (
             <DragDropContext onDragEnd={onDragEnd}>
-                <Droppable droppableId='ready'>
-                    {(provided) => (
-                        <div {...provided.droppableProps} ref={provided.innerRef} className="list-container">
-                            {displayTodos()}
-                            {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable>
+                <div className="container">
+                    <Droppable droppableId='delete'>
+                        {(provided) => (
+                            <div {...provided.droppableProps} ref={provided.innerRef} className="delete-container">
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                    <Droppable droppableId='ready'>
+                        {(provided) => (
+                            <div {...provided.droppableProps} ref={provided.innerRef} className="list-container">
+                                {displayTodos()}
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+
+                    <Droppable droppableId='done'>
+                        {(provided) => (
+                            <div {...provided.droppableProps} ref={provided.innerRef} className="done-container">
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </div>
                 <TodoInputComponent setState={setNewTodo} address={ownerAddress} />
             </DragDropContext>
         );
     }
     else return null
 }
+
