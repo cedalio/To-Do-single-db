@@ -15,6 +15,10 @@ type Todo = {
     status: string
 }
 
+type Update = {
+    todoId: String
+    update: String
+}
 
 const GET_TODOS = gql`
   query GetTodos{
@@ -35,8 +39,14 @@ const GET_TODOS = gql`
 export default function ListComponent(props: { address: string | undefined }) {
     const [todos, setTodos] = React.useState<Todo[]>([]);
     const [newTodo, setNewTodo] = React.useState<Todo>();
-    const [update, setUpdate] = React.useState("");
+    const [update, setUpdate] = React.useState<Update>();
     const ownerAddress: string = String(props.address)
+
+
+    function onUpdateTodo(todoId: String) {
+        setTodos((current: any) =>
+            current.filter((todo: any) => todo.id !== todoId))
+    }
 
     const defaultTodo = {
         title: "This Is Your First ToDo Card!",
@@ -67,19 +77,20 @@ export default function ListComponent(props: { address: string | undefined }) {
 
     const displayTodos = () => {
         if (todos.length === 0) {
-            return <CardComponent key="default" todo={defaultTodo} ownerAddress={defaultTodo.owner} setState={setTodos} index={1} updateState={update}/>;
+            return <CardComponent key="default" todo={defaultTodo} ownerAddress={defaultTodo.owner} setState={setTodos} index={1} updateState={update} onUpdateTodo={onUpdateTodo} />;
         }
         else {
             return (
-                todos.map((todo: Todo, index) => (
-                    <CardComponent key={todo.id} todo={todo} ownerAddress={ownerAddress} setState={setTodos} index={index} updateState={update}/>
+                todos.filter((todo) => todo.status === "ready").map((todo: Todo, index) => (
+
+                    <CardComponent key={todo.id} todo={todo} ownerAddress={ownerAddress} setState={setTodos} index={index} updateState={update} onUpdateTodo={onUpdateTodo}/>
                 ))
             )
         }
     }
 
     function onDragEnd(result: any) {
-        setUpdate(result.destination.droppableId)
+        setUpdate({update: result.destination.droppableId, todoId: result.draggableId})
     }
 
     if (props.address) {

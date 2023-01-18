@@ -7,6 +7,7 @@ import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import { useMutation, gql } from '@apollo/client';
 import { Draggable } from "react-beautiful-dnd"
+import { Troubleshoot } from '@mui/icons-material';
 
 const UPDATE_TODO = gql`
   mutation UpdateTodo($id:UUID!, $status:String){
@@ -32,23 +33,33 @@ type Todo = {
     status: string
 }
 
-export default function CardComponent(props: { setState: React.Dispatch<React.SetStateAction<any>>, todo: Todo, ownerAddress: String, index: any, updateState: String }) {
+type Update = {
+    todoId: String
+    update: String
+}
+
+export default function CardComponent(props: { setState: React.Dispatch<React.SetStateAction<any>>, todo: Todo, ownerAddress: String, index: any, updateState: Update | undefined, onUpdateTodo: Function }) {
     const [updateTodo, { data, loading, error }] = useMutation(UPDATE_TODO);
-    const isInitialRender = React.useRef(true);
 
     React.useEffect(() => {
-        if (data) {
-            props.setState((current: any) =>
-                current.filter((todo: any) => todo.id !== data.updateTodo.id)
-            )
-        }
+        console.log(data)
     }, [data])
 
+
     React.useEffect(() => {
-        if (isInitialRender.current) {
-            isInitialRender.current = false;
-        } else {
-            console.log(props.updateState);
+        if (props.updateState !== undefined) {
+            if (props.updateState.todoId === props.todo.id) {
+                if (props.updateState.update === "delete") {
+                    console.log(props.updateState)
+                    props.onUpdateTodo(props.todo.id)
+                    updateTodo({ variables: { id: props.todo.id, status: "delete" } })
+                }
+                else if (props.updateState.update === "done") {
+                    props.onUpdateTodo(props.todo.id)
+                    console.log(props.updateState)
+                    updateTodo({ variables: { id: props.todo.id, status: "done" } })
+                }
+            }
         }
     }, [props.updateState])
 
@@ -56,7 +67,7 @@ export default function CardComponent(props: { setState: React.Dispatch<React.Se
     if (loading) return <h1>Submitting...</h1>;
 
 
-    if (props.todo.owner === props.ownerAddress && props.todo.status === "ready") {
+    if (props.todo.owner === props.ownerAddress) {
         return (
             <Draggable draggableId={props.todo.id} index={props.index} >
                 {(provided) => (
