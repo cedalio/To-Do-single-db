@@ -3,6 +3,15 @@ import CardComponent from './CardComponent';
 import { useQuery, gql } from '@apollo/client';
 import TodoInputComponent from "./TodoInputComponent"
 import { DragDropContext, Droppable } from "react-beautiful-dnd"
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref,
+) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 
 type Todo = {
@@ -41,9 +50,20 @@ export default function ListComponent(props: { address: string | undefined }) {
     const [newTodo, setNewTodo] = React.useState<Todo>();
     const [update, setUpdate] = React.useState<Update>();
     const ownerAddress: string = String(props.address)
+    const [open, setOpen] = React.useState(false);
 
+
+    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            setOpen(false);
+            return;
+        }
+
+        setOpen(false);
+    };
 
     function onUpdateTodo(todoId: String) {
+        setOpen(true)
         setTodos((current: any) =>
             current.filter((todo: any) => todo.id !== todoId))
     }
@@ -122,6 +142,11 @@ export default function ListComponent(props: { address: string | undefined }) {
                     </Droppable>
                 </div>
                 <TodoInputComponent setState={setNewTodo} address={ownerAddress} />
+                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                        The operation was successfull
+                    </Alert>
+                </Snackbar>
             </DragDropContext>
         );
     }

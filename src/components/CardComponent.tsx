@@ -7,6 +7,7 @@ import Card from '@mui/material/Card';
 import { useMutation, gql } from '@apollo/client';
 import { Draggable } from "react-beautiful-dnd"
 
+
 const UPDATE_TODO = gql`
   mutation UpdateTodo($id:UUID!, $status:String){
     updateTodo(id: $id, fields:{status: $status} ){
