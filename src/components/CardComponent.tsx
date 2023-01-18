@@ -42,7 +42,9 @@ export default function CardComponent(props: { setState: React.Dispatch<React.Se
     const [updateTodo, { data, loading, error }] = useMutation(UPDATE_TODO);
 
     React.useEffect(() => {
-        console.log(data)
+        if (data) {
+            props.onUpdateTodo(data.updateTodo.id)
+        }
     }, [data])
 
 
@@ -50,13 +52,9 @@ export default function CardComponent(props: { setState: React.Dispatch<React.Se
         if (props.updateState !== undefined) {
             if (props.updateState.todoId === props.todo.id) {
                 if (props.updateState.update === "delete") {
-                    console.log(props.updateState)
-                    props.onUpdateTodo(props.todo.id)
                     updateTodo({ variables: { id: props.todo.id, status: "delete" } })
                 }
                 else if (props.updateState.update === "done") {
-                    props.onUpdateTodo(props.todo.id)
-                    console.log(props.updateState)
                     updateTodo({ variables: { id: props.todo.id, status: "done" } })
                 }
             }
@@ -64,7 +62,7 @@ export default function CardComponent(props: { setState: React.Dispatch<React.Se
     }, [props.updateState])
 
     if (error) return <h1>Submission error! {error.message}</h1>;
-    if (loading) return <h1>Submitting...</h1>;
+    if (loading) return <></>;
 
 
     if (props.todo.owner === props.ownerAddress) {
