@@ -83,14 +83,14 @@ export default function ListComponent(props: { address: string | undefined }) {
             return (
                 todos.filter((todo) => todo.status === "ready").map((todo: Todo, index) => (
 
-                    <CardComponent key={todo.id} todo={todo} ownerAddress={ownerAddress} setState={setTodos} index={index} updateState={update} onUpdateTodo={onUpdateTodo}/>
+                    <CardComponent key={todo.id} todo={todo} ownerAddress={ownerAddress} setState={setTodos} index={index} updateState={update} onUpdateTodo={onUpdateTodo} />
                 ))
             )
         }
     }
 
     function onDragEnd(result: any) {
-        setUpdate({update: result.destination.droppableId, todoId: result.draggableId})
+        setUpdate({ update: result.destination.droppableId, todoId: result.draggableId })
     }
 
     if (props.address) {

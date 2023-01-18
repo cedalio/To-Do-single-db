@@ -85,7 +85,7 @@ export default function TodoInputComponent(props: {
 
     return (
         <div className="list-container">
-            <Card key="input-card" sx={{ minWidth: "30%", maxWidth: "60%", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
+            <Card key="input-card" sx={{width:"500px", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
                 <CardContent sx={{ display: "flex", flexDirection: "column" }}>
                     <TextField
                         error={titleError}
