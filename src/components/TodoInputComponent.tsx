@@ -14,6 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import { Rings } from 'react-loader-spinner'
 
 //GRAPHQL query template, this will be replaced by the variables
 const CREATE_TODO = gql`
@@ -62,10 +63,13 @@ export default function TodoInputComponent(props: {
         if (data) {
             props.setState(data.createTodo)
             clearInputs()
+            setTitleError(false)
+            setDescriptionError(false)
         }
     }, [data])
 
-    if (loading) return <h1>Submitting...</h1>;
+
+
     if (error) return <h1>Submission error! {error.message}</h1>;
 
 
@@ -76,6 +80,8 @@ export default function TodoInputComponent(props: {
     function clearInputs() {
         setTitle("")
         setDescription("")
+        setPriority("")
+        setTag([])
     }
 
     const handleChangeTagsSelect = (event: SelectChangeEvent<string[]>) => {
@@ -83,8 +89,28 @@ export default function TodoInputComponent(props: {
         setTag(value);
     };
 
+    const Loader = () => {
+        if (loading) return (
+            <Rings
+                height="180"
+                width="180"
+                radius={2}
+                color="#54d45b"
+                ariaLabel="puff-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+            />
+        );
+        else {
+            return <></>
+        }
+
+    }
+
     return (
         <div className="list-container">
+            <Loader />
             <Card key="input-card" sx={{ width: "500px", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
                 <CardContent sx={{ display: "flex", flexDirection: "column" }}>
                     <TextField
@@ -159,9 +185,11 @@ export default function TodoInputComponent(props: {
             <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", minWidth: "200px", marginBottom: "2em" }}>
                 <Fab onClick={(e) => {
                     clearInputs()
-                }} sx={{ backgroundColor: "#0000003d", "&:hover": {
-                    backgroundColor: "#c54662"
-                } }} aria-label="add">
+                }} sx={{
+                    backgroundColor: "#0000003d", "&:hover": {
+                        backgroundColor: "#c54662"
+                    }
+                }} aria-label="add">
                     <ClearIcon />
                 </Fab>
                 <Fab onClick={(e) => {
@@ -179,6 +207,6 @@ export default function TodoInputComponent(props: {
                     <CheckIcon />
                 </Fab>
             </Box>
-        </div>
+        </div >
     );
 }
