@@ -7,7 +7,6 @@ import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import { useMutation, gql } from '@apollo/client';
 import { Draggable } from "react-beautiful-dnd"
-import { Troubleshoot } from '@mui/icons-material';
 
 const UPDATE_TODO = gql`
   mutation UpdateTodo($id:UUID!, $status:String){
@@ -87,12 +86,6 @@ export default function CardComponent(props: { setState: React.Dispatch<React.Se
                                     </Stack>
                                 </Stack>
                             </CardContent>
-                            <Button variant="contained" onClick={(e) => {
-
-                            }}>Delete</Button>
-                            <Button variant="outlined" onClick={(e) => {
-                                updateTodo({ variables: { id: props.todo.id, status: "done" } })
-                            }}>Done</Button>
                         </Card>
                     </div>
                 )}

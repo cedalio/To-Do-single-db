@@ -85,7 +85,7 @@ export default function TodoInputComponent(props: {
 
     return (
         <div className="list-container">
-            <Card key="input-card" sx={{width:"500px", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
+            <Card key="input-card" sx={{ width: "500px", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
                 <CardContent sx={{ display: "flex", flexDirection: "column" }}>
                     <TextField
                         error={titleError}
@@ -159,17 +159,23 @@ export default function TodoInputComponent(props: {
             <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", minWidth: "200px", marginBottom: "2em" }}>
                 <Fab onClick={(e) => {
                     clearInputs()
-                }} sx={{ backgroundColor: "#0000003d" }} aria-label="add">
+                }} sx={{ backgroundColor: "#0000003d", "&:hover": {
+                    backgroundColor: "#c54662"
+                } }} aria-label="add">
                     <ClearIcon />
                 </Fab>
                 <Fab onClick={(e) => {
                     if (title && description) {
-                        createTodo({ variables: { title: title, description: description, priority: priority, owner: props.address, tags: tag, status:"ready" } })
+                        createTodo({ variables: { title: title, description: description, priority: priority, owner: props.address, tags: tag, status: "ready" } })
                     } else {
                         setTitleError(true)
                         setDescriptionError(true)
                     }
-                }} sx={{ backgroundColor: "#0000003d" }} aria-label="add">
+                }} sx={{
+                    backgroundColor: "#0000003d", "&:hover": {
+                        backgroundColor: "#54d45b"
+                    }
+                }} aria-label="add">
                     <CheckIcon />
                 </Fab>
             </Box>
