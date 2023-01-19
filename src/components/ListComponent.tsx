@@ -105,13 +105,14 @@ export default function ListComponent(props: { address: string | undefined }) {
     }
 
     const displayTodos = () => {
-        if (todos.length === 0) {
-            return <CardComponent key="default" todo={defaultTodo} ownerAddress={defaultTodo.owner} setState={setTodos} index={1} updateState={update} onUpdateTodo={onUpdateTodo} />;
+        const displayableTodos = todos.filter((todo) => todo.status === "ready")
+        if (displayableTodos.length === 0) {
+            return <CardComponent key="default" todo={defaultTodo} ownerAddress={defaultTodo.owner} setState={setTodos} index={1} updateState={update} onUpdateTodo={onUpdateTodo} default={true}/>;
         }
         else {
             return (
-                todos.filter((todo) => todo.status === "ready").map((todo: Todo, index) => (
-                    <CardComponent key={todo.id} todo={todo} ownerAddress={ownerAddress} setState={setTodos} index={index} updateState={update} onUpdateTodo={onUpdateTodo} />
+                displayableTodos.map((todo: Todo, index) => (
+                    <CardComponent key={todo.id} todo={todo} ownerAddress={ownerAddress} setState={setTodos} index={index} updateState={update} onUpdateTodo={onUpdateTodo} default={false}/>
                 ))
             )
         }
