@@ -68,7 +68,7 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
-.delete-container{
+/* .delete-container{
   background-image: url("../public/del.png");
   background-repeat: no-repeat;
   background-position: center;
@@ -77,4 +77,4 @@
   background-image: url("../public/check.png");
   background-repeat: no-repeat;
   background-position: center;
-}
+} */
