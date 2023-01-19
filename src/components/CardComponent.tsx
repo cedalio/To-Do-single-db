@@ -69,7 +69,7 @@ export default function CardComponent(props: { setState: React.Dispatch<React.Se
             <Draggable draggableId={props.todo.id} index={props.index} >
                 {(provided) => (
                     <div draggable {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef}>
-                        <Card draggable sx={{ minWidth: "500px", maxWidth: "60%", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
+                        <Card draggable sx={{ minWidth: "500px", maxWidth: "60%", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)", zIndex:99 }}>
                             <CardContent>
                                 <Typography sx={{ fontSize: 23, fontWeight: 600, textAlign: "justify" }} color="black" gutterBottom>
                                     {props.todo.title}

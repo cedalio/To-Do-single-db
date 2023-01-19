@@ -47,9 +47,9 @@ const GET_TODOS = gql`
 
 const dragColors = {
     initialColor: "#63636324",
-    dragStartColor:"#636363",
-    doneColor:"#6ab05a",
-    deleteColor:"#ea3b3b"
+    dragStartColor: "#636363",
+    doneColor: "#6ab05a",
+    deleteColor: "#ea3b3b"
 }
 
 export default function ListComponent(props: { address: string | undefined }) {
@@ -111,7 +111,6 @@ export default function ListComponent(props: { address: string | undefined }) {
         else {
             return (
                 todos.filter((todo) => todo.status === "ready").map((todo: Todo, index) => (
-
                     <CardComponent key={todo.id} todo={todo} ownerAddress={ownerAddress} setState={setTodos} index={index} updateState={update} onUpdateTodo={onUpdateTodo} />
                 ))
             )
@@ -124,17 +123,17 @@ export default function ListComponent(props: { address: string | undefined }) {
         setUpdate({ update: result.destination.droppableId, todoId: result.draggableId })
     }
 
-    function onDragStart(result:any){
+    function onDragStart(result: any) {
         setDeleteIconColor(dragColors.dragStartColor)
         setDoneIconColor(dragColors.dragStartColor)
     }
-    function onDragUpdate(result:any){
+    function onDragUpdate(result: any) {
         console.log(result.destination.droppableId)
-        if(result.destination.droppableId === "delete"){
+        if (result.destination.droppableId === "delete") {
             setDeleteIconColor(dragColors.deleteColor)
-        }else if(result.destination.droppableId === "done"){
+        } else if (result.destination.droppableId === "done") {
             setDoneIconColor(dragColors.doneColor)
-        }else{
+        } else {
             setDeleteIconColor(dragColors.dragStartColor)
             setDoneIconColor(dragColors.dragStartColor)
         }
@@ -147,7 +146,7 @@ export default function ListComponent(props: { address: string | undefined }) {
                     <Droppable droppableId='delete'>
                         {(provided) => (
                             <div {...provided.droppableProps} ref={provided.innerRef} className="delete-container">
-                                <HighlightOffIcon fontSize="large" sx={{height: "200px", width:"200px", color:deleteIconColor }}/>
+                                <HighlightOffIcon fontSize="large" sx={{ height: "200px", width: "200px", color: deleteIconColor }} />
                                 {provided.placeholder}
                             </div>
                         )}
@@ -164,7 +163,7 @@ export default function ListComponent(props: { address: string | undefined }) {
                     <Droppable droppableId='done'>
                         {(provided) => (
                             <div {...provided.droppableProps} ref={provided.innerRef} className="done-container">
-                                <CheckCircleOutlineIcon fontSize="large" sx={{height: "200px", width:"200px", color:doneIconColor }}/>
+                                <CheckCircleOutlineIcon fontSize="large" sx={{ height: "200px", width: "200px", color: doneIconColor }} />
                                 {provided.placeholder}
                             </div>
                         )}
