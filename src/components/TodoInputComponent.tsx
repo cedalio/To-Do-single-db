@@ -81,6 +81,8 @@ export default function TodoInputComponent(props: {
         setTitle("")
         setDescription("")
         setPriority("")
+        setTitleError(false)
+        setDescriptionError(false)
         setTag([])
     }
 
@@ -117,9 +119,11 @@ export default function TodoInputComponent(props: {
                         error={titleError}
                         id="title"
                         label="Title"
+                        helperText={titleError ? "Some fields are required" : null}
                         placeholder={defaultTodo.title}
                         value={title}
                         onChange={(event) => {
+                            setTitleError(false)
                             setTitle(event.target.value);
                         }}
                         sx={{ marginBottom: "1em", }}
@@ -130,8 +134,10 @@ export default function TodoInputComponent(props: {
                         id="description"
                         label="Description"
                         placeholder={defaultTodo.description}
+                        helperText={descriptionError ? "Some fields are required" : null}
                         value={description}
                         onChange={(event) => {
+                            setDescriptionError(false)
                             setDescription(event.target.value);
                         }}
                         multiline={true}
