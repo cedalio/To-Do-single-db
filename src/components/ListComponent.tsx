@@ -53,34 +53,44 @@ const dragColors = {
 }
 
 export default function ListComponent(props: { address: string | undefined }) {
+    const ownerAddress: string = String(props.address)
     const [todos, setTodos] = React.useState<Todo[]>([]);
     const [newTodo, setNewTodo] = React.useState<Todo>();
     const [update, setUpdate] = React.useState<Update>();
-    const ownerAddress: string = String(props.address)
     const [open, setOpen] = React.useState(false);
+    const [updateMessage, setUpdateMessage] = React.useState("");
+    const [updateError, setUpdateError] = React.useState(false);
     const [doneIconColor, setDoneIconColor] = React.useState(dragColors.initialColor);
     const [deleteIconColor, setDeleteIconColor] = React.useState(dragColors.initialColor);
 
 
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
+            console.log("asdasdasd")
             setOpen(false);
             return;
         }
-
         setOpen(false);
     };
 
-    function onUpdateTodo(todoId: String) {
+    function onUpdateTodo(todoId: String, status: string) {
+        setUpdateError(false)
+        setUpdateMessage(`The ${status} operation was successfully updated in polygon-mumbai`)
         setOpen(true)
         setTodos((current: any) =>
             current.filter((todo: any) => todo.id !== todoId))
     }
 
+    function onError() {
+        setUpdateError(true)
+        setUpdateMessage("There was an unexpected error")
+        setOpen(true)
+    }
+
     const defaultTodo = {
         title: "This Is Your First ToDo Card!",
         description: "Buy some food for my dog and change their water",
-        tags: ["healt", "rutine"],
+        tags: ["market", "rutine"],
         priority: 1,
         id: "abcdefg12345",
         owner: "abcdefg123",
@@ -107,12 +117,12 @@ export default function ListComponent(props: { address: string | undefined }) {
     const displayTodos = () => {
         const displayableTodos = todos.filter((todo) => todo.status === "ready")
         if (displayableTodos.length === 0) {
-            return <CardComponent key="default" todo={defaultTodo} ownerAddress={defaultTodo.owner} setState={setTodos} index={1} updateState={update} onUpdateTodo={onUpdateTodo} default={true}/>;
+            return <CardComponent key="default" todo={defaultTodo} ownerAddress={defaultTodo.owner} setState={setTodos} index={1} updateState={update} onUpdateTodo={onUpdateTodo} default={true} onError={onError}/>;
         }
         else {
             return (
                 displayableTodos.map((todo: Todo, index) => (
-                    <CardComponent key={todo.id} todo={todo} ownerAddress={ownerAddress} setState={setTodos} index={index} updateState={update} onUpdateTodo={onUpdateTodo} default={false}/>
+                    <CardComponent key={todo.id} todo={todo} ownerAddress={ownerAddress} setState={setTodos} index={index} updateState={update} onUpdateTodo={onUpdateTodo} default={false} onError={onError}/>
                 ))
             )
         }
@@ -129,7 +139,6 @@ export default function ListComponent(props: { address: string | undefined }) {
         setDoneIconColor(dragColors.dragStartColor)
     }
     function onDragUpdate(result: any) {
-        console.log(result.destination.droppableId)
         if (result.destination.droppableId === "delete") {
             setDeleteIconColor(dragColors.deleteColor)
         } else if (result.destination.droppableId === "done") {
@@ -147,7 +156,7 @@ export default function ListComponent(props: { address: string | undefined }) {
                     <Droppable droppableId='delete'>
                         {(provided) => (
                             <div {...provided.droppableProps} ref={provided.innerRef} className="delete-container">
-                                <HighlightOffIcon fontSize="large" sx={{ height: "200px", width: "200px", color: deleteIconColor }} />
+                                <HighlightOffIcon fontSize="large" sx={{ height: "200px", width: "200px", color: deleteIconColor, position: "fixed", right: "76%" }} />
                                 {provided.placeholder}
                             </div>
                         )}
@@ -164,7 +173,7 @@ export default function ListComponent(props: { address: string | undefined }) {
                     <Droppable droppableId='done'>
                         {(provided) => (
                             <div {...provided.droppableProps} ref={provided.innerRef} className="done-container">
-                                <CheckCircleOutlineIcon fontSize="large" sx={{ height: "200px", width: "200px", color: doneIconColor }} />
+                                <CheckCircleOutlineIcon fontSize="large" sx={{ height: "200px", width: "200px", color: doneIconColor, position: "fixed", left: "76%" }} />
                                 {provided.placeholder}
                             </div>
                         )}
@@ -172,8 +181,8 @@ export default function ListComponent(props: { address: string | undefined }) {
                 </div>
                 <TodoInputComponent setState={setNewTodo} address={ownerAddress} />
                 <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                        The operation was successfull
+                    <Alert onClose={handleClose} severity={updateError ? "error" : "success"} sx={{ width: '100%' }}>
+                        {updateMessage}
                     </Alert>
                 </Snackbar>
             </DragDropContext>

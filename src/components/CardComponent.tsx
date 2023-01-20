@@ -37,12 +37,12 @@ type Update = {
     update: String
 }
 
-export default function CardComponent(props: { setState: React.Dispatch<React.SetStateAction<any>>, todo: Todo, ownerAddress: String, index: any, updateState: Update | undefined, onUpdateTodo: Function, default:boolean }) {
+export default function CardComponent(props: { setState: React.Dispatch<React.SetStateAction<any>>, todo: Todo, ownerAddress: String, index: any, updateState: Update | undefined, onUpdateTodo: Function, default: boolean, onError: Function }) {
     const [updateTodo, { data, loading, error }] = useMutation(UPDATE_TODO);
 
     React.useEffect(() => {
         if (data) {
-            props.onUpdateTodo(data.updateTodo.id)
+            props.onUpdateTodo(data.updateTodo.id, data.updateTodo.status)
         }
     }, [data])
 
@@ -60,16 +60,15 @@ export default function CardComponent(props: { setState: React.Dispatch<React.Se
         }
     }, [props.updateState])
 
-    if (error) return <h1>Submission error! {error.message}</h1>;
+    if (error) { props.onError(); }
     if (loading) return <></>;
-
 
     if (props.todo.owner === props.ownerAddress) {
         return (
             <Draggable draggableId={props.todo.id} index={props.index} isDragDisabled={props.default}>
                 {(provided) => (
                     <div draggable {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef}>
-                        <Card draggable sx={{ minWidth: "500px", maxWidth: "60%", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)", zIndex:99 }}>
+                        <Card draggable sx={{ minWidth: "500px", maxWidth: "60%", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)", zIndex: 99 }}>
                             <CardContent>
                                 <Typography sx={{ fontSize: 23, fontWeight: 600, textAlign: "justify" }} color="black" gutterBottom>
                                     {props.todo.title}

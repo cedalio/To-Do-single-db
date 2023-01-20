@@ -56,6 +56,7 @@
   top: 31px;
 }
 
+/* LIST COMPONENTS */
 .list-container{
   display: flex;
   justify-content: space-between;
@@ -69,13 +70,20 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
-/* .delete-container{
-  background-image: url("../public/del.png");
-  background-repeat: no-repeat;
-  background-position: center;
+.loader-layer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
+
+.error-message{
+  color: #e53867;
+}
+
+.delete-container{
+  position: relative;
+}
+
 .done-container{
-  background-image: url("../public/check.png");
-  background-repeat: no-repeat;
-  background-position: center;
-} */
+  position: relative;
+}

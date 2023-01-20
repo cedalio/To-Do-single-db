@@ -70,9 +70,6 @@ export default function TodoInputComponent(props: {
 
 
 
-    if (error) return <h1>Submission error! {error.message}</h1>;
-
-
     const handleChangePriorities = (event: React.MouseEvent<HTMLElement>, priority: string) => {
         setPriority(priority);
     };
@@ -93,17 +90,27 @@ export default function TodoInputComponent(props: {
 
     const Loader = () => {
         if (loading) return (
-            <Rings
-                height="180"
-                width="180"
-                radius={2}
-                color="#54d45b"
-                ariaLabel="puff-loading"
-                wrapperStyle={{}}
-                wrapperClass=""
-                visible={true}
-            />
-        );
+            <div className="loader-layer">
+                <Rings
+                    height="100"
+                    width="100"
+                    radius={2}
+                    color="#54d45b"
+                    ariaLabel="puff-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={true}
+                />
+                <p>Sending transaction to polygon-mumbai</p>
+            </div>
+        )
+        else if (error) {
+            return (
+                <div className="loader-layer">
+                    <p className='error-message'>Unexpected error. Try again</p>
+                </div>
+            )
+        }
         else {
             return <></>
         }
@@ -112,8 +119,8 @@ export default function TodoInputComponent(props: {
 
     return (
         <div className="list-container">
-            <Loader />
-            <Card key="input-card" sx={{ width: "500px", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
+
+            <Card key="input-card" sx={{ width: "500px", mb: 1, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)" }}>
                 <CardContent sx={{ display: "flex", flexDirection: "column" }}>
                     <TextField
                         error={titleError}
@@ -188,6 +195,7 @@ export default function TodoInputComponent(props: {
                     </Box>
                 </CardContent>
             </Card>
+            <Loader />
             <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", minWidth: "200px", marginBottom: "2em" }}>
                 <Fab onClick={(e) => {
                     clearInputs()
