@@ -66,7 +66,7 @@ export default function ListComponent(props: { address: string | undefined }) {
 
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
-            console.log("asdasdasd")
+            setUpdateError(false)
             setOpen(false);
             return;
         }
@@ -180,7 +180,7 @@ export default function ListComponent(props: { address: string | undefined }) {
                     </Droppable>
                 </div>
                 <TodoInputComponent setState={setNewTodo} address={ownerAddress} />
-                <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity={updateError ? "error" : "success"} sx={{ width: '100%' }}>
                         {updateMessage}
                     </Alert>
