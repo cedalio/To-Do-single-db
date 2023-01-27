@@ -1,16 +1,15 @@
+import "./App.css"
 import {
   EthereumClient,
   modalConnectors,
   walletConnectProvider,
 } from "@web3modal/ethereum";
-import "./App.css"
 import { Web3Modal } from "@web3modal/react";
-
 import { configureChains, createClient, WagmiConfig, useAccount } from "wagmi";
-
 import { polygonMumbai } from "wagmi/chains";
-import Header from "./components/Header";
 import { Web3Button } from "@web3modal/react";
+
+import Header from "./components/Header";
 import ListComponent from "./components/ListComponent";
 const chains = [polygonMumbai];
 
