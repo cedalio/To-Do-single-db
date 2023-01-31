@@ -7,7 +7,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { HttpLink } from '@apollo/client';
 
 const link = new HttpLink({
-  uri: 'http://localhost:8080/graphql',
+  uri: String(process.env.REACT_APP_GRAPHQL_URL),
   headers: {
     "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/json"
