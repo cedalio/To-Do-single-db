@@ -55,6 +55,8 @@ export default function TodoInputComponent(props: {
     const [titleError, setTitleError] = React.useState(false);
     const [descriptionError, setDescriptionError] = React.useState(false);
     const [tag, setTag] = React.useState<string[]>([]);
+    const [disableButtons, setDisableButtons] = React.useState(false);
+
     const priorities = [1, 2, 3, 4]
 
     const [createTodo, { data, loading, error }] = useMutation(CREATE_TODO);
@@ -89,22 +91,26 @@ export default function TodoInputComponent(props: {
     };
 
     const Loader = () => {
-        if (loading) return (
-            <div className="loader-layer">
-                <Rings
-                    height="100"
-                    width="100"
-                    radius={2}
-                    color="#54d45b"
-                    ariaLabel="puff-loading"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                    visible={true}
-                />
-                <p>Sending transaction to polygon-mumbai</p>
-            </div>
-        )
+        if (loading) {
+            setDisableButtons(true)
+            return (
+                <div className="loader-layer">
+                    <Rings
+                        height="100"
+                        width="100"
+                        radius={2}
+                        color="#54d45b"
+                        ariaLabel="puff-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                        visible={true}
+                    />
+                    <p>Sending transaction to polygon-mumbai</p>
+                </div>
+            )
+        }
         else if (error) {
+            setDisableButtons(false)
             return (
                 <div className="loader-layer">
                     <p className='error-message'>Unexpected error. Try again</p>
@@ -112,6 +118,7 @@ export default function TodoInputComponent(props: {
             )
         }
         else {
+            setDisableButtons(false)
             return <></>
         }
 
@@ -197,7 +204,7 @@ export default function TodoInputComponent(props: {
             </Card>
             <Loader />
             <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between", minWidth: "200px", marginBottom: "2em" }}>
-                <Fab onClick={(e) => {
+                <Fab disabled={disableButtons} onClick={(e) => {
                     clearInputs()
                 }} sx={{
                     backgroundColor: "#0000003d", "&:hover": {
@@ -206,7 +213,7 @@ export default function TodoInputComponent(props: {
                 }} aria-label="add">
                     <ClearIcon />
                 </Fab>
-                <Fab onClick={(e) => {
+                <Fab disabled={disableButtons} onClick={(e) => {
                     if (title && description) {
                         createTodo({ variables: { title: title, description: description, priority: priority, owner: props.address, tags: tag, status: "ready" } })
                     } else {
