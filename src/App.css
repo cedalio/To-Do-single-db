@@ -21,15 +21,28 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: hsl(214deg 32% 91%);;
+  color: hsl(214deg 32% 91%);
+  margin-bottom: 3em;
 }
 
 .App-header h1{
-  font-size: 3em;
+  font-size: 5em;
+  margin-bottom: 0;
 }
 
 .App-link {
   color: #61dafb;
+}
+.powered-by{
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 500px;
+}
+.powered-by img{
+  width: 75px;
+  height: 23px;
+  margin-left: 5px;
 }
 
 @keyframes App-logo-spin {
