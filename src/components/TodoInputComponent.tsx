@@ -49,7 +49,7 @@ const tagsOptions = [
 export default function TodoInputComponent(props: {
     setState: React.Dispatch<React.SetStateAction<any>>, address: string
 }) {
-    const [priority, setPriority] = React.useState("");
+    const [priority, setPriority] = React.useState(1);
     const [title, setTitle] = React.useState("");
     const [description, setDescription] = React.useState("");
     const [titleError, setTitleError] = React.useState(false);
@@ -72,14 +72,14 @@ export default function TodoInputComponent(props: {
 
 
 
-    const handleChangePriorities = (event: React.MouseEvent<HTMLElement>, priority: string) => {
+    const handleChangePriorities = (event: React.MouseEvent<HTMLElement>, priority: number) => {
         setPriority(priority);
     };
 
     function clearInputs() {
         setTitle("")
         setDescription("")
-        setPriority("")
+        setPriority(1)
         setTitleError(false)
         setDescriptionError(false)
         setTag([])
