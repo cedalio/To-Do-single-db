@@ -91,6 +91,14 @@ export default function TodoInputComponent(props: {
     };
 
     const Loader = () => {
+        if(!priority){
+            setDisableButtons(false)
+            return (
+                <div className="loader-layer">
+                    <p className='error-message'>The priority its required</p>
+                </div>
+            )
+        }
         if (loading) {
             setDisableButtons(true)
             return (
