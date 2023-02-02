@@ -14,8 +14,8 @@ export default function Footer() {
                 <div className="branding">
                     <div className="logo">
                         <img src="favicon-32x32.png" alt="cedalio" />
-                        <h2>DECENTRALIZED
-                            TODO DAPP</h2>
+                        <h4>DECENTRALIZED
+                            TODO DAPP</h4>
                     </div>
                     <div className="rights">
                         <img src="cedalio-icon.png" alt="cedalio" /> 2023 All Rights Reserved.

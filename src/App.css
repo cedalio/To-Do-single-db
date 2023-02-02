@@ -2,7 +2,11 @@
   text-align: center;
   min-height: 100vh;
 }
-
+.gif{
+  width: 100%;
+  margin-bottom: 0;
+  margin-top: 1em;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -22,13 +26,16 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: hsl(214deg 32% 91%);
-  margin-bottom: 3em;
+  margin-bottom: 1em;
 }
 
 .App-header h1{
-  font-size: 5em;
+  font-size: 4em;
   margin-bottom: 0;
   margin-top: 20px;
+  background: linear-gradient(90deg, rgba(255,151,54,1) 0%, rgba(135,32,255,1) 50%, rgba(255,72,51,1) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .App-link {
@@ -38,11 +45,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
-  width: 500px;
+  width: 450px;
+  font-size: 16px;
+  font-weight: 100;
+  color: black;
 }
 .powered-by img{
-  width: 115px;
-  height: 29px;
+  height: 19px;
   margin-left: 5px;
 }
 
@@ -79,6 +88,7 @@
   height: fit-content;
 }
 
+
 .container{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -104,9 +114,6 @@
 
 /* FOOTER */
 footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
   width: 100%;
 }
 
@@ -114,19 +121,20 @@ footer {
 .App-footer{
   position: relative;
   width: 100%;
-  height: 250px;
+  height: 130px;
   padding-top: 3em;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 1em;
 }
 
 .line{
   position: absolute;
   width: 100%;
   height: 4px;
-  top: 48px;
+  top: 25px;
   background: linear-gradient(90deg, #FF9736 0%, #8720FF 42.71%, #FF4833 100%);
 }
 
@@ -137,6 +145,7 @@ footer {
   display: flex;
   font-family: 'Inter';
   font-style: normal;
+  font-size: small;
   font-weight: 400;
 }
 
@@ -156,8 +165,8 @@ footer {
 
 
 .App-footer .branding .logo img{
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
 }
 
 
@@ -167,6 +176,7 @@ footer {
   justify-content: center;
   font-family: 'Urbanist';
   font-style: normal;
+  font-size:x-small ;
   width: 20%;
 }
 .App-footer .branding .rights img{
@@ -178,11 +188,12 @@ footer {
   width: 20%;
   display: flex;
   justify-content: space-around;
+  align-items: center;
 }
 
 .App-footer .branding .social img{
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   margin-left: 6px;
   margin-right: 6px;
 }

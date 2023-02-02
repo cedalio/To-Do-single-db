@@ -41,12 +41,13 @@ export default function App() {
           <div className={address ? `button-container connected` : `button-container`} >
             <Web3Button />
           </div>
+          <img className="gif" style={address ? { display: 'none' } : { display: 'flex' }} src="home-gif.gif" alt="explained gif" />
           <ListComponent address={address} />
           <Web3Modal
             projectId={projectId}
             ethereumClient={ethereumClient}
           />
-          <Footer/>
+          <Footer />
         </WagmiConfig>
       </div>
     </>
