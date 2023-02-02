@@ -21,12 +21,12 @@ export default function Footer() {
                         <img src="cedalio-icon.png" alt="cedalio" /> 2023 All Rights Reserved.
                     </div>
                     <div className="social">
-                        <img src="discord.png" alt="discord" />
-                        <img src="github.png" alt="github" />
-                        <img src="linkedin.png" alt="linkedin" />
-                        <img src="medium.png" alt="medium" />
-                        <img src="twitter.png" alt="twitter" />
-                        <img src="youtube.png" alt="youtube" />
+                        <a href="https://discord.gg/kSdhmb9UUT" target='_blank' rel="noreferrer"><img src="discord.png" alt="discord" /></a>
+                        <a href="https://github.com/cedalio" target='_blank' rel="noreferrer"><img src="github.png" alt="github" /></a>
+                        <a href="https://www.linkedin.com/company/cedalio" target='_blank' rel="noreferrer"><img src="linkedin.png" alt="linkedin" /></a>
+                        <a href="https://medium.com/@cedalio" target='_blank' rel="noreferrer"><img src="medium.png" alt="medium" /></a>
+                        <a href="https://twitter.com/CedalioTech" target='_blank' rel="noreferrer"><img src="twitter.png" alt="twitter" /></a>
+                        <a href="https://www.youtube.com/channel/UCvhpGZRV9O4tydT3A53CmiQ/featured" target='_blank' rel="noreferrer"><img src="youtube.png" alt="youtube" /></a>
                     </div>
                 </div>
             </div>
