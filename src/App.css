@@ -2,10 +2,16 @@
   text-align: center;
   min-height: 100vh;
 }
-.gif{
+.gif-container{
   width: 100%;
-  margin-bottom: 0;
-  margin-top: 1em;
+  padding-top: 70px;
+  padding-bottom: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gif{
+  width: 35%;
 }
 .App-logo {
   height: 40vmin;
@@ -115,6 +121,7 @@
 /* FOOTER */
 footer {
   width: 100%;
+  font-family: 'Urbanist';
 }
 
 
@@ -167,6 +174,7 @@ footer {
 .App-footer .branding .logo img{
   width: 40px;
   height: 40px;
+  margin-right: 5px;
 }
 
 
@@ -213,7 +221,7 @@ footer {
 }
 .App-footer .address img{
   margin-left: 10px;
-  width: 34px;
-  height: 34px;
+  width: 20px;
+  height: 20px;
 }
 
