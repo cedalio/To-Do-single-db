@@ -41,8 +41,8 @@
   width: 500px;
 }
 .powered-by img{
-  width: 75px;
-  height: 23px;
+  width: 115px;
+  height: 29px;
   margin-left: 5px;
 }
 
@@ -101,3 +101,50 @@
 .done-container{
   position: relative;
 }
+
+/* FOOTER */
+.App-footer{
+  position: relative;
+  width: 100%;
+  height: 250px;
+  padding-top: 3em;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.line{
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  top: 48px;
+  background: linear-gradient(90deg, #FF9736 0%, #8720FF 42.71%, #FF4833 100%);
+}
+
+.App-footer .texts{
+  width: 60%;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+}
+
+.App-footer .branding{
+  width: 100%;
+  height: 80px;
+}
+
+.App-footer .address{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.App-footer .address img{
+  margin-left: 10px;
+  width: 34px;
+  height: 34px;
+}
+

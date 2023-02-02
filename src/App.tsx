@@ -11,6 +11,7 @@ import { Web3Button } from "@web3modal/react";
 
 import Header from "./components/Header";
 import ListComponent from "./components/ListComponent";
+import Footer from "./components/Footer";
 const chains = [polygonMumbai];
 
 const projectId = String(process.env.REACT_APP_WC_PROJECT_ID)
@@ -45,6 +46,7 @@ export default function App() {
             projectId={projectId}
             ethereumClient={ethereumClient}
           />
+          <Footer/>
         </WagmiConfig>
       </div>
     </>
