@@ -115,14 +115,15 @@ export default function ListComponent(props: { address: string | undefined }) {
     }
 
     const displayTodos = () => {
-        const displayableTodos = todos.filter((todo) => todo.status === "ready")
+        const displayableTodos = todos.filter((todo) => todo.status === "ready" && todo.owner === ownerAddress)
+        console.log(displayableTodos)
         if (displayableTodos.length === 0) {
-            return <CardComponent key="default" todo={defaultTodo} ownerAddress={defaultTodo.owner} setState={setTodos} index={1} updateState={update} onUpdateTodo={onUpdateTodo} default={true} onError={onError} />;
+            return <CardComponent key="default" todo={defaultTodo}  setState={setTodos} index={1} updateState={update} onUpdateTodo={onUpdateTodo} default={true} onError={onError} />;
         }
         else {
             return (
                 displayableTodos.map((todo: Todo, index) => (
-                    <CardComponent key={todo.id} todo={todo} ownerAddress={ownerAddress} setState={setTodos} index={index} updateState={update} onUpdateTodo={onUpdateTodo} default={false} onError={onError} />
+                    <CardComponent key={todo.id} todo={todo} setState={setTodos} index={index} updateState={update} onUpdateTodo={onUpdateTodo} default={false} onError={onError} />
                 ))
             )
         }

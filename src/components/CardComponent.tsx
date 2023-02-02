@@ -37,7 +37,7 @@ type Update = {
     update: String
 }
 
-export default function CardComponent(props: { setState: React.Dispatch<React.SetStateAction<any>>, todo: Todo, ownerAddress: String, index: any, updateState: Update | undefined, onUpdateTodo: Function, default: boolean, onError: Function }) {
+export default function CardComponent(props: { setState: React.Dispatch<React.SetStateAction<any>>, todo: Todo, index: any, updateState: Update | undefined, onUpdateTodo: Function, default: boolean, onError: Function }) {
     const [updateTodo, { data, loading, error }] = useMutation(UPDATE_TODO);
 
     React.useEffect(() => {
@@ -63,35 +63,31 @@ export default function CardComponent(props: { setState: React.Dispatch<React.Se
     if (error) { props.onError(); }
     if (loading) return <></>;
 
-    if (props.todo.owner === props.ownerAddress) {
-        return (
-            <Draggable draggableId={props.todo.id} index={props.index} isDragDisabled={props.default}>
-                {(provided) => (
-                    <div draggable {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef}>
-                        <Card draggable sx={{ minWidth: "500px", maxWidth: "60%", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)", zIndex: 99 }}>
-                            <CardContent>
-                                <Typography sx={{ fontSize: 23, fontWeight: 600, textAlign: "justify" }} color="black" gutterBottom>
-                                    {props.todo.title}
-                                </Typography>
-                                <Typography sx={{ fontSize: 14, textAlign: "justify" }} color="text.secondary" gutterBottom>
-                                    {props.todo.description}
-                                </Typography>
-                                <Stack spacing={1} alignItems="left">
-                                    <Stack direction="row" spacing={1}>
-                                        <Chip color="error" label={`P${props.todo.priority}`} sx={{ fontWeight: "600", backgroundColor: "hsl(0deg 86% 97%)", color: "hsl(347deg 77% 56%)" }}></Chip>
-                                        {props.todo.tags.map((tag: any) => {
-                                            return <Chip label={tag} key={tag} color="success" sx={{ fontWeight: "600", backgroundColor: "hsl(138deg 76% 97%)", color: "hsl(142deg 61% 42%)" }} />
-                                        })}
-                                    </Stack>
+
+    return (
+        <Draggable draggableId={props.todo.id} index={props.index} isDragDisabled={props.default}>
+            {(provided) => (
+                <div draggable {...provided.dragHandleProps} {...provided.draggableProps} ref={provided.innerRef}>
+                    <Card draggable sx={{ minWidth: "500px", maxWidth: "60%", mb: 3, borderRadius: "11px", boxShadow: "0px 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 7%), 0px 1px 3px 0px rgb(0 0 0 / 3%)", zIndex: 99 }}>
+                        <CardContent>
+                            <Typography sx={{ fontSize: 23, fontWeight: 600, textAlign: "justify" }} color="black" gutterBottom>
+                                {props.todo.title}
+                            </Typography>
+                            <Typography sx={{ fontSize: 14, textAlign: "justify" }} color="text.secondary" gutterBottom>
+                                {props.todo.description}
+                            </Typography>
+                            <Stack spacing={1} alignItems="left">
+                                <Stack direction="row" spacing={1}>
+                                    <Chip color="error" label={`P${props.todo.priority}`} sx={{ fontWeight: "600", backgroundColor: "hsl(0deg 86% 97%)", color: "hsl(347deg 77% 56%)" }}></Chip>
+                                    {props.todo.tags.map((tag: any) => {
+                                        return <Chip label={tag} key={tag} color="success" sx={{ fontWeight: "600", backgroundColor: "hsl(138deg 76% 97%)", color: "hsl(142deg 61% 42%)" }} />
+                                    })}
                                 </Stack>
-                            </CardContent>
-                        </Card>
-                    </div>
-                )}
-            </Draggable>
-        )
-    }
-    else {
-        return <></>
-    }
+                            </Stack>
+                        </CardContent>
+                    </Card>
+                </div>
+            )}
+        </Draggable>
+    )
 }
