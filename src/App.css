@@ -203,6 +203,14 @@ footer {
   flex-direction: row;
   align-items: center;
 }
+.App-footer .address a{
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+}
+.App-footer .address a:hover{
+  color: rgb(230 64 93);
+}
 .App-footer .address img{
   margin-left: 10px;
   width: 34px;
