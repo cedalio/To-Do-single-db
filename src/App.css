@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100;400&display=swap');
+
 .App {
   text-align: center;
   min-height: 100vh;
@@ -122,6 +124,7 @@
 footer {
   width: 100%;
   font-family: 'Urbanist';
+  font-style: normal;
 }
 
 
@@ -150,10 +153,13 @@ footer {
   align-items: center;
   flex-direction: column;
   display: flex;
-  font-family: 'Inter';
-  font-style: normal;
-  font-size: small;
   font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  text-align: center;
+  color: #0A142F;
+  opacity: 0.8;
+
 }
 
 .App-footer .branding{
@@ -184,8 +190,8 @@ footer {
   justify-content: center;
   font-family: 'Urbanist';
   font-style: normal;
-  font-size:x-small ;
-  width: 20%;
+  font-size:18px ;
+  width: 26%;
 }
 .App-footer .branding .rights img{
   margin-right: 10px;
