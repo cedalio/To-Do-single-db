@@ -6,7 +6,7 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd"
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -158,7 +158,7 @@ export default function ListComponent(props: { address: string | undefined }) {
                         <Droppable droppableId='delete'>
                             {(provided) => (
                                 <div {...provided.droppableProps} ref={provided.innerRef} className="delete-container">
-                                    <HighlightOffIcon fontSize="large" sx={{ height: "200px", width: "200px", color: deleteIconColor, position: "fixed", right: "76%" }} />
+                                    <DeleteOutlineOutlinedIcon fontSize="large" sx={{ height: "200px", width: "200px", color: deleteIconColor, position: "fixed", right: "76%" }} />
                                     {provided.placeholder}
                                 </div>
                             )}
