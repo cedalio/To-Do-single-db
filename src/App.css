@@ -103,6 +103,14 @@
 }
 
 /* FOOTER */
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+
 .App-footer{
   position: relative;
   width: 100%;
@@ -133,8 +141,50 @@
 }
 
 .App-footer .branding{
-  width: 100%;
+  width: 80%;
   height: 80px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.App-footer .branding .logo{
+  width: 20%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+
+.App-footer .branding .logo img{
+  width: 60px;
+  height: 60px;
+}
+
+
+.App-footer .branding .rights{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Urbanist';
+  font-style: normal;
+  width: 20%;
+}
+.App-footer .branding .rights img{
+  margin-right: 10px;
+  width: 100px;
+  height: 25px;
+}
+.App-footer .branding .social{
+  width: 20%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.App-footer .branding .social img{
+  width: 50px;
+  height: 50px;
+  margin-left: 6px;
+  margin-right: 6px;
 }
 
 .App-footer .address{
