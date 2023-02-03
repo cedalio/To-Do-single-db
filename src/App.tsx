@@ -53,7 +53,9 @@ export default function App() {
             <Web3Button />
           </div>
           <div className="gif-container" style={address ? { display: 'none' } : { display: 'flex' }} >
-            <img className="gif" src="home-gif.gif" alt="explained gif" />
+            <div className="web">
+              <img className="gif" src="home-gif.gif" alt="explained gif" />
+            </div>
           </div>
           <ListComponent address={address} />
           <Web3Modal
