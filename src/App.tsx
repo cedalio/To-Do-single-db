@@ -8,15 +8,16 @@ import { Web3Modal } from "@web3modal/react";
 import { configureChains, createClient, WagmiConfig, useAccount } from "wagmi";
 import { polygonMumbai } from "wagmi/chains";
 import { Web3Button } from "@web3modal/react";
-import TagManager from 'react-gtm-module'
+import ReactGA from 'react-ga';
 
 import Header from "./components/Header";
 import ListComponent from "./components/ListComponent";
 import Footer from "./components/Footer";
-import { useEffect } from "react";
 const chains = [polygonMumbai];
 
 const projectId = String(process.env.REACT_APP_WC_PROJECT_ID)
+const TRACKING_ID = String(process.env.REACT_APP_TRACKING_ID)
+
 
 // Wagmi client
 const { provider } = configureChains(chains, [
@@ -34,16 +35,7 @@ const ethereumClient = new EthereumClient(wagmiClient, chains);
 export default function App() {
   const projectId = String(process.env.REACT_APP_WC_PROJECT_ID)
   const { address } = useAccount()
-  const tagManagerArgs = {
-    gtmId: String(process.env.REACT_APP_GOOGLE_TAG_MANAGER_ID),
-    auth: process.env.REACT_APP_GOOGLE_TAG_MANAGER_AUTH,
-    preview: process.env.REACT_APP_GOOGLE_TAG_MANAGER_PREVIEW
-  }
-
-  useEffect(() => {
-    TagManager.initialize(tagManagerArgs)
-  }, [])
-
+  ReactGA.initialize(TRACKING_ID);
   return (
     <>
       <div className="App">
