@@ -1,5 +1,5 @@
 export default function Footer() {
-    const contractUrl = String(process.env.REACT_APP_CONTRACT_ADDRESS)
+    const contractUrl = `https://mumbai.polygonscan.com/address/${String(process.env.REACT_APP_CONTRACT_ADDRESS)}`
     return (
         <footer>
             <div className="App-footer">
@@ -8,7 +8,7 @@ export default function Footer() {
                 <div className="texts">
                     <p>This is a example ToDo app that show the power of Cedalio's technology. This is only a demo app using a Testnet. <strong>All the information here is stored in a smart contract</strong>. If you want to learn more please clic here. Or if you have some feedback please feel free to reach out us!</p>
                     <div className="address">
-                        <p>Smart Contract Address:  <a href={contractUrl} target='_blank' rel="noreferrer">0xdd86a634c8448e2c60984d7b74e42017293b8caf</a></p>
+                        <p>Smart Contract Address:  <a href={contractUrl} target='_blank' rel="noreferrer">{String(process.env.REACT_APP_CONTRACT_ADDRESS)}</a></p>
                         <img src="polygon.png" alt="polygon icon" />
                     </div>
                 </div>
