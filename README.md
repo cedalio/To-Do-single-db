@@ -1,8 +1,8 @@
 # Cedalio ⨯ To-Do dApp Single Data Base Example
 
-[Join our Community](https://discord.gg/kSdhmb9UUT)
+[Join our Discord Community](https://discord.gg/kSdhmb9UUT)
 
-[![Deploy to Cedalio](https://cedalio.com/images/deploy%20Schema%20button.png)](https://docs.cedalio.com/quickstart/getting-started/download-cli#download-and-install-cli)
+[![Deploy to Cedalio](https://cedalio.com/images/deploy-schema-button-small.png)](https://docs.cedalio.com/quickstart/getting-started/download-cli#download-and-install-cli)
 </br>
 
 ## Getting Started
@@ -13,6 +13,7 @@
 4. Serve your schema `bifrost serve --schema-name todo-v1`
 5. Run Hardhat node `npx hardhat node --config hardhat.config.js ` [How to Install Hardhat](https://docs.cedalio.com/quickstart/deploy-to-networks/deploy-locally-using-hardhat#deploy-your-graphql-schema-locally-using-hardhat)
 
+```
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: "0.8.17",
@@ -25,12 +26,15 @@ module.exports = {
     }
   }
 };
+```
 
 5. In the project directory, you can run: `npm install`
-6. Create a `.env.development`
+6. Create a `.env.development` with the smart contract address for this deployment from the sterp 3.
+```
 REACT_APP_WC_PROJECT_ID=WALLET-CONNECT-ID
 GENERATE_SOURCEMAP=false
-REACT_APP_CONTRACT_ADDRESS=0xA00A027D2DEA28EF0A41972414C47002A32D8777
+REACT_APP_CONTRACT_ADDRESS=SMART-CONTRACT-ADDRESS
+```
 6. Then run: `npm start`
 
 ## Learn More About Cedalio
