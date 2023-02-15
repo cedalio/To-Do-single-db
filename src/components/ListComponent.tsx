@@ -115,10 +115,7 @@ export default function ListComponent(props: { address: string | undefined }) {
     }
 
     const displayTodos = () => {
-        console.log("TODOS",todos)
         const displayableTodos = todos.filter((todo) => todo.status === "ready" && todo.owner === ownerAddress)
-        console.log("TODOS TO DISPLAY",displayableTodos)
-        console.log("OWNER",ownerAddress)
         if (displayableTodos.length === 0) {
             return <CardComponent key="default" todo={defaultTodo}  setState={setTodos} index={1} updateState={update} onUpdateTodo={onUpdateTodo} default={true} onError={onError} />;
         }
