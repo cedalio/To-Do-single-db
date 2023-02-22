@@ -11,13 +11,15 @@ import { Draggable } from "react-beautiful-dnd"
 const UPDATE_TODO = gql`
   mutation UpdateTodo($id:UUID!, $status:String){
     updateTodo(id: $id, fields:{status: $status} ){
-        id
-        title
-        description
-        priority
-        owner
-        tags
-        status
+        todo{
+            id
+            title
+            description
+            priority
+            owner
+            tags
+            status
+        }
     }
   }
 `;
@@ -42,7 +44,7 @@ export default function CardComponent(props: { setState: React.Dispatch<React.Se
 
     React.useEffect(() => {
         if (data) {
-            props.onUpdateTodo(data.updateTodo.id, data.updateTodo.status)
+            props.onUpdateTodo(data.updateTodo.todo.id, data.updateTodo.todo.status)
         }
     }, [data])
 
